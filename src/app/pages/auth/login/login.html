@@ -1,1 +1,37 @@
-<p>login works!</p>
+<section class="bg-black/89 w-full h-full flex flex-col justify-center items-center">
+    <div class="text-neutral-600 bg-neutral-950 px-6 pt-20 pb-10 flex flex-col gap-10 rounded-2xl w-[430px] max-sm:w-fit max-sm:pt-10 max-sm:px-10">
+        <div class="flex flex-col gap-5">
+            <div class="flex justify-center">
+                <img src="assets/logo.png" alt="" class="size-12 select-none">
+            </div>
+            <div>
+                <h2 class="text-2xl text-white font-semibold">Iniciar Sesión</h2>
+                <p class="text-sm">Ingrese sus credenciales para ingresar.</p>
+            </div>
+        </div>
+        <form [formGroup]="loginForm" class="flex flex-col gap-5 text-sm" (submit)="sendCredentials()">
+            <div class="flex flex-col">
+                <label for="email" class="">Correo Electronico</label>
+                <ng-icon name="heroUserSolid" class="text-white! relative top-6 left-3"/>
+                <input id="email" formControlName="email" type="email" placeholder="Ingrese su correo..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="loginForm" control="email">
+            </div>
+            <div class="flex flex-col relative">
+                <label for="password" class="">Contraseña</label>
+                <ng-icon name="heroKeySolid" class="text-white! relative left-3 top-6" />
+                <input id="password" formControlName="password" [type]="showPassword() ? 'text' : 'password'" autocomplete="current-password" placeholder="Ingrese su contraseña..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="loginForm" control="password">
+                <button (click)="togglePassord()" class="absolute top-10 left-[85%]">
+                    @if (showPassword()) {
+                        <ng-icon name="heroEyeSlashSolid" class="text-white! size-6!" />
+                    } @else {
+                        <ng-icon name="heroEyeSolid" class="text-white! size-6!" />
+                    }
+                </button>
+            </div>
+            <div class="m-5 flex flex-col gap-3 justify-center items-center">
+                <p class="text-[10px]">Al crear una cuenta aceptas todos nuestros terminos.</p>
+                <button class="bg-white text-black text-lg font-semibold px-5 py-1 rounded-lg cursor-pointer w-fit disabled:bg-white/30 disabled:text-black/60" type="submit" [disabled]="loginForm.controls.email.errors || loginForm.controls.password.errors" appButtonClickAnimation>Iniciar Sesión </button>
+                <p class="text-[12px]">No tienes creada una cuenta? <a routerLink="../register" class="text-white underline">Crear cuenta.</a></p>
+            </div>
+        </form>
+    </div>
+</section>
