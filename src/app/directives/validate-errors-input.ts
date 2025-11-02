@@ -49,12 +49,16 @@ export class ValidateErrorsInput implements OnInit {
     if(hasError) {
       this.render.removeClass(this.el.nativeElement, 'border-neutral-600');
       this.render.addClass(this.el.nativeElement, 'border-red-500');
+      this.render.addClass(this.el.nativeElement, 'focus:outline-none');
+      this.render.addClass(this.el.nativeElement, 'focus:border-red-500');
       
       const message = this.formErrorService.getMessageError(this.formGroup, this.control);
       
       this.createElementAlert(message!);
     } else {
       this.render.removeClass(this.el.nativeElement, 'border-red-500');
+      this.render.removeClass(this.el.nativeElement, 'focus:outline-none');
+      this.render.removeClass(this.el.nativeElement, 'focus:border-red-500');
       this.render.addClass(this.el.nativeElement, 'border-neutral-600');
       this.deleteElement();
     }
