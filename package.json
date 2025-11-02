@@ -31,6 +31,8 @@
     "@angular/platform-server": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@angular/ssr": "^20.3.4",
+    "@ng-icons/core": "^32.2.0",
+    "@ng-icons/heroicons": "^32.2.0",
     "@tailwindcss/postcss": "^4.1.16",
     "express": "^5.1.0",
     "postcss": "^8.5.6",
