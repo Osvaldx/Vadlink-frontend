@@ -3,6 +3,11 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 
 export const routes: Routes = [
     {
+        path: '',
+        redirectTo: 'auth/login',
+        pathMatch: 'full'
+    },
+    {
         path: 'auth',
         children: [
             { path: 'login', loadComponent: () => import('./pages/auth/login/login').then(m => m.Login) },
