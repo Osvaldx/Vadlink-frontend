@@ -1,1 +1,88 @@
-<p>register works!</p>
+<section class="bg-black/89 min-h-screen flex flex-col justify-center items-center">
+    <div class="text-neutral-600 bg-neutral-950 px-6 pt-10 flex flex-col gap-10 rounded-2xl w-[600px] h-fit max-sm:w-fit max-sm:pt-10 max-sm:px-10">
+        <div class="flex flex-col gap-5 max-sm:flex-row max-sm:items-center">
+            <div class="flex justify-center">
+                <img src="assets/logo.png" alt="" class="size-12 select-none">
+            </div>
+            <div>
+                <h2 class="text-2xl text-white font-semibold">Registrarse</h2>
+                <p class="text-sm">Ingrese sus credenciales para poder registrarse.</p>
+            </div>
+        </div>
+        <form [formGroup]="registerForm" class="flex flex-col gap-1 text-sm" (submit)="sendCredentials()">
+            <div class="flex gap-5 max-sm:flex-col max-sm:gap-1">
+                <div class="flex flex-col">
+                    <label for="firstName" class="relative top-2">Nombre <span class="text-red-700">*</span></label>
+                    <ng-icon name="heroUserSolid" class="text-white! relative top-6 left-3"/>
+                    <input id="firstName" formControlName="firstName" type="text" autocomplete="off" placeholder="Ingrese su nombre..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="firstName">
+                </div>
+                <div class="flex flex-col">
+                    <label for="lastName" class="relative top-2">Apellido</label>
+                    <ng-icon name="heroUsersSolid" class="text-white! relative top-6 left-3"/>
+                    <input id="lastName" formControlName="lastName" type="text" autocomplete="off" placeholder="Ingrese su apellido..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="lastName">
+                </div>
+            </div>
+            <div class="flex gap-5 max-sm:flex-col">
+                <div class="flex flex-col">
+                    <label for="username" class="relative top-2">Nombre de Usuario <span class="text-red-700">*</span></label>
+                    <ng-icon name="heroTagSolid" class="text-white! relative top-6 left-3"/>
+                    <input id="username" formControlName="username" type="text" autocomplete="off" placeholder="Ingres un nombre de usuario..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="username">
+                </div>
+                <div class="flex flex-col">
+                    <label for="dateofbirth" class="relative top-2">Fecha de Nacimiento <span class="text-red-700">*</span></label>
+                    <ng-icon name="heroCalendarDateRangeSolid" class="text-white! relative top-6 left-3"/>
+                    <input id="dateofbirth" formControlName="dateofbirth" type="date" autocomplete="off" placeholder="Ingrese su edad..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="dateofbirth">
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label for="description" class="relative top-2">Descripción</label>
+                <ng-icon name="heroChatBubbleBottomCenterTextSolid" class="text-white! relative top-6 left-3"/>
+                <input id="description" formControlName="description" type="text" autocomplete="off" placeholder="Ingrese una descripción breve..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="description">
+            </div>
+            <div class="flex flex-col">
+                <label for="email" class="relative top-2">Correo Electronico <span class="text-red-700">*</span></label>
+                <ng-icon name="heroIdentificationSolid" class="text-white! relative top-6 left-3"/>
+                <input id="email" formControlName="email" type="email" autocomplete="off" placeholder="Ingrese su correo..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="email">
+            </div>
+            <div class="flex gap-5 max-sm:flex-col">
+                <div class="flex flex-col relative">
+                    <label for="password" class="relative top-2">Contraseña <span class="text-red-700">*</span></label>
+                    <ng-icon name="heroKeySolid" class="text-white! relative left-3 top-6" />
+                    <input id="password" formControlName="password" [type]="showPassword() ? 'text' : 'password'" autocomplete="off" placeholder="Ingrese su contraseña..." appValidateErrorsInput [formGroup]="registerForm" control="password"
+                    [className]="registerForm.errors && (registerForm.controls.password.touched) ? 'border border-red-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white' : 'border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white'">
+                    <button type="button" (click)="togglePassword()" class="absolute top-10 left-[85%]">
+                        @if (showPassword()) {
+                            <ng-icon name="heroEyeSlashSolid" class="text-white! size-6!" />
+                        } @else {
+                            <ng-icon name="heroEyeSolid" class="text-white! size-6!" />
+                        }
+                    </button>
+                </div>
+                <div class="flex flex-col relative">
+                    <label for="repeatPassword" class="relative top-2">Repetir Contraseña <span class="text-red-700">*</span></label>
+                    <ng-icon name="heroKeySolid" class="text-white! relative left-3 top-6" />
+                    <input id="repeatPassword" formControlName="repeatPassword" [type]="showPassword() ? 'text' : 'password'" autocomplete="off" placeholder="Repita su contraseña..." appValidateErrorsInput [formGroup]="registerForm" control="repeatPassword"
+                    [className]="registerForm.errors && (registerForm.controls.password.touched) ? 'border border-red-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white' : 'border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white'">
+                    <button type="button" (click)="togglePassword()" class="absolute top-10 left-[85%]">
+                        @if (showPassword()) {
+                            <ng-icon name="heroEyeSlashSolid" class="text-white! size-6!" />
+                        } @else {
+                            <ng-icon name="heroEyeSolid" class="text-white! size-6!" />
+                        }
+                    </button>
+                </div>
+            </div>
+            <app-input-upload-image [registerForm]="registerForm"></app-input-upload-image>
+            <div class="text-center">
+                @if (registerForm.errors && registerForm.controls.password.touched) {
+                    <p class="text-red-500 text-[12px]">[!] Las contraseñas no son iguales!</p>
+                }
+            </div>
+            <div class="mb-5 flex flex-col gap-3 justify-center items-center">
+                <p class="text-[10px]">Al crear una cuenta aceptas todos nuestros terminos.</p>
+                <button class="bg-white text-black text-lg font-semibold px-5 py-1 rounded-lg cursor-pointer w-fit disabled:bg-white/30 disabled:text-black/60" type="submit" [disabled]="formDisabled()" appButtonClickAnimation>Registrarse</button>
+                <p class="text-[12px]">Ya tienes una cuenta? <a routerLink="../login" class="text-white underline">Iniciar sesión.</a></p>
+            </div>
+        </form>
+    </div>
+</section>
