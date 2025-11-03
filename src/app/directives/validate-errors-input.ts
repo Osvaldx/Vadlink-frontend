@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2, signal } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormErrorService } from '../services/form-error-service';
 
 @Directive({
