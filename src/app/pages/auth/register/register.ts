@@ -10,6 +10,7 @@ import { ButtonClickAnimation } from '../../../directives/button-click-animation
 import { ValidateErrorsInput } from '../../../directives/validate-errors-input';
 import { RouterLink } from '@angular/router';
 import { InputUploadImage } from "../../../components/input-upload-image/input-upload-image";
+import { Auth, SignUpData } from '../../../services/auth';
 
 @Component({
   selector: 'app-register',
@@ -34,27 +35,34 @@ export class Register {
   },
   { validators: [ValidateMatchPasswords('password', 'repeatPassword')] });
 
-  public sendCredentials(): void {
-    if(!this.registerForm.errors) {
-      const control = this.registerForm.controls;
-      console.log(`
-        ${control.firstName.value}
-        ${control.lastName.value}
-        ${control.username.value}
-        ${control.description.value}
-        ${control.email.value}
-        ${control.password.value}
-        ${control.repeatPassword.value}
-        ${control.avatar.value?.text}
-      `)
+  constructor(private readonly authService: Auth) { }
 
-      if(control.dateofbirth.value) {
-        const [year, month, day] = control.dateofbirth.value?.split('-').map(Number);
-        const dateofbirth = new Date(year, month-1, day);
-        console.log(dateofbirth.toISOString());
-      }
-      
+  public sendCredentials(): void {
+    if(this.registerForm.errors) return;
+
+    const control = this.registerForm.controls;
+
+    // Mandar foto de perfil a cloudinary...
+
+    if(!control.dateofbirth.value) return;
+    const [year, month, day] = control.dateofbirth.value?.split('-').map(Number);
+    const dateofbirth = new Date(year, month-1, day);
+    console.log(dateofbirth.toISOString());
+
+    let credentials: SignUpData = {
+      firstName: control.firstName.value!,
+      username: control.username.value!,
+      dateofbirth: dateofbirth.toISOString(),
+      email: control.email.value!,
+      password: control.password.value!
     }
+
+    if(control.lastName.value) credentials['lastName'] = control.lastName.value;
+    if(control.description.value) credentials['description'] = control.description.value;
+    // Acá subir la URL de la foto que se subio a cloudinary...
+
+    this.authService.signUp(credentials);
+    this.registerForm.reset();
   }
 
   public togglePassword(): void {
