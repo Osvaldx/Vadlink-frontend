@@ -71,7 +71,7 @@ export class ValidateErrorsInput implements OnInit {
       
       this.render.addClass(p, 'text-red-500');
       this.render.addClass(p, 'text-[12px]');
-      this.render.addClass(p, 'm-2');
+      this.render.addClass(p, 'm-1');
       this.render.appendChild(p, text);
 
       this.render.appendChild(this.el.nativeElement.parentNode, p);
