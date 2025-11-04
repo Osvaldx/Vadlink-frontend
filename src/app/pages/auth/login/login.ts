@@ -1,10 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
 import { RouterLink } from "@angular/router";
 import { ButtonClickAnimation } from "../../../directives/button-click-animation";
 import { ValidateErrorsInput } from "../../../directives/validate-errors-input";
-import { ValidatepasswordWrong } from '../../../validators/passwordWrong.validator';
 import { ValidationEmail } from '../../../validators/email.validator';
 import { Auth, SignInCredentials } from '../../../services/auth';
 
@@ -17,16 +16,18 @@ import { Auth, SignInCredentials } from '../../../services/auth';
 export class Login {
 
   public loginWithUsername = signal<boolean>(false);
+  public showPassword = signal<boolean>(false);
+  public formDisabled = signal<boolean>(true);
 
   public loginForm = new FormGroup({
     email: new FormControl('', [ValidationEmail()]),
     username: new FormControl('', [Validators.minLength(3), Validators.maxLength(20)]),
-    password: new FormControl('', [Validators.required, ValidatepasswordWrong()])
+    password: new FormControl('', [Validators.required])
   })
-  
-  public showPassword = signal<boolean>(false);
 
-  constructor(private readonly authService: Auth) { }
+  constructor(private readonly authService: Auth) {
+    this.loginForm.valueChanges.subscribe(() => this.checkLoginDisabled());
+  }
 
   public togglePassword(): void {
     this.showPassword.update(p => !p);
@@ -50,14 +51,19 @@ export class Login {
   public toggleLoginWith(): void {
     (this.loginWithUsername()) ? this.loginForm.controls.email.reset() : this.loginForm.controls.username.reset();
     this.loginWithUsername.update(l => !l);
+    this.formDisabled.set(true);
   }
 
-  public loginDisabled(): boolean {
-    const emailEmpty = this.loginForm.controls.email.value === '';
-    const usernameEmpty = this.loginForm.controls.username.value === '';
-    const passwordEmpty = this.loginForm.controls.password.value === '';
+  private isEmpty(cadena: string | null) {
+    return (cadena === '' || cadena === null || cadena === undefined);
+  }
 
+  private checkLoginDisabled(): void {
     const controls = this.loginForm.controls;
+    const emailEmpty = this.isEmpty(controls.email.value);
+    const usernameEmpty = this.isEmpty(controls.username.value);
+    const passwordEmpty = this.isEmpty(controls.password.value);
+
     const hasEmailError = (controls.email.errors) ? true : false;
     const hasUsernameError = (controls.username.errors) ? true : false;
     const hasPasswordError = (controls.password.errors) ? true : false;
@@ -65,7 +71,7 @@ export class Login {
 
     const isDisabled = (((emailEmpty && usernameEmpty) || passwordEmpty) || hasErrors);
 
-    return isDisabled;
+    this.formDisabled.set(isDisabled);
   }
 
 }
