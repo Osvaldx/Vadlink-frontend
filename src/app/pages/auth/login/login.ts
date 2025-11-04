@@ -6,6 +6,7 @@ import { ButtonClickAnimation } from "../../../directives/button-click-animation
 import { ValidateErrorsInput } from "../../../directives/validate-errors-input";
 import { ValidatepasswordWrong } from '../../../validators/passwordWrong.validator';
 import { ValidationEmail } from '../../../validators/email.validator';
+import { Auth, SignInCredentials } from '../../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -25,24 +26,44 @@ export class Login {
   
   public showPassword = signal<boolean>(false);
 
+  constructor(private readonly authService: Auth) { }
+
   public togglePassword(): void {
     this.showPassword.update(p => !p);
   }
 
   public sendCredentials(): void {
-    console.log(this.loginForm.get('email')?.value);
-    console.log(this.loginForm.get('password')?.value);
+    const form = this.loginForm.controls;
+    const emailOrUsername = ((form.email.value != '') ? form.email.value : form.username.value);
+    const password = form.password.value;
+
+    if(!emailOrUsername || !password) return;
+    
+    const credentials: SignInCredentials = {
+      emailOrUsername: emailOrUsername,
+      password: password
+    }
+
+    this.authService.signIn(credentials);
   }
 
   public toggleLoginWith(): void {
+    (this.loginWithUsername()) ? this.loginForm.controls.email.reset() : this.loginForm.controls.username.reset();
     this.loginWithUsername.update(l => !l);
   }
 
   public loginDisabled(): boolean {
-    const hasErrors = !!this.loginForm.errors;
     const emailEmpty = this.loginForm.controls.email.value === '';
     const usernameEmpty = this.loginForm.controls.username.value === '';
-    const isDisabled = hasErrors || (emailEmpty && usernameEmpty);
+    const passwordEmpty = this.loginForm.controls.password.value === '';
+
+    const controls = this.loginForm.controls;
+    const hasEmailError = (controls.email.errors) ? true : false;
+    const hasUsernameError = (controls.username.errors) ? true : false;
+    const hasPasswordError = (controls.password.errors) ? true : false;
+    const hasErrors = (emailEmpty) ? (hasUsernameError || hasPasswordError) : (hasEmailError || hasPasswordError);
+
+    const isDisabled = (((emailEmpty && usernameEmpty) || passwordEmpty) || hasErrors);
 
     return isDisabled;
   }
