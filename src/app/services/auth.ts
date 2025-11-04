@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 
 export interface SignInCredentials {
@@ -18,12 +18,19 @@ export interface SignUpData {
 }
 
 export interface UserData {
-  id: string,
-  fistName: string,
+  _id: string,
+  firstName: string,
   lastName: string,
   username: string,
   rol: string,
-  email: string
+  description: string,
+  dateofbirth: string,
+  email: string,
+  avatar: string,
+  avatar_id: string,
+  createDate: string,
+  __v: number,
+  password: string
 }
 
 @Injectable({
@@ -37,20 +44,30 @@ export class Auth {
   public currentUser = signal<UserData | null>(null);
 
   public signIn(credentials: SignInCredentials) {
-    const request = this.httpClient.post(this.apiUrl + '/auth/login', credentials);
-
-    request.subscribe((request) => {
-      console.log(request);
-    })
+    this.httpClient.post(this.apiUrl + '/auth/login', credentials).subscribe({
+      next: (user) => {
+        this.currentUser.set(user as UserData);
+        console.log(this.currentUser());
+      },
+      error: () => {
+        console.log("[!] Fallo");
+        this.currentUser.set(null);
+      }
+    });
 
   }
 
   public signUp(credentials: SignUpData) {
-    const request = this.httpClient.post(this.apiUrl + '/auth/register', credentials);
-
-    request.subscribe((request) => {
-      console.log(request);
-    })
+    this.httpClient.post(this.apiUrl + '/auth/register', credentials).subscribe({
+      next: (user) => {
+        this.currentUser.set(user as UserData);
+        console.log(this.currentUser());
+      },
+      error: () => {
+        console.log("[!] Fallo");
+        this.currentUser.set(null);
+      }
+    });
   }
 
   public verifyJwt() {
