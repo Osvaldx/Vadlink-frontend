@@ -25,7 +25,7 @@ export class Register {
     firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
     lastName: new FormControl(''),
     username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-    description: new FormControl(''),
+    description: new FormControl('', [Validators.minLength(3), Validators.maxLength(20)]),
     dateofbirth: new FormControl('', [Validators.required, ValidateDateOfBirth()]),
     email: new FormControl('', [Validators.required, ValidationEmail()]),
     password: new FormControl('', [Validators.required, ValidatepasswordWrong()]),
@@ -42,12 +42,18 @@ export class Register {
         ${control.lastName.value}
         ${control.username.value}
         ${control.description.value}
-        ${control.dateofbirth.value}
         ${control.email.value}
         ${control.password.value}
         ${control.repeatPassword.value}
         ${control.avatar.value?.text}
-        `)
+      `)
+
+      if(control.dateofbirth.value) {
+        const [year, month, day] = control.dateofbirth.value?.split('-').map(Number);
+        const dateofbirth = new Date(year, month-1, day);
+        console.log(dateofbirth.toISOString());
+      }
+      
     }
   }
 
