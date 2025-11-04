@@ -15,8 +15,11 @@ import { ValidationEmail } from '../../../validators/email.validator';
 })
 export class Login {
 
+  public loginWithUsername = signal<boolean>(false);
+
   public loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, ValidationEmail()]),
+    email: new FormControl('', [ValidationEmail()]),
+    username: new FormControl('', [Validators.minLength(3), Validators.maxLength(20)]),
     password: new FormControl('', [Validators.required, ValidatepasswordWrong()])
   })
   
@@ -26,9 +29,22 @@ export class Login {
     this.showPassword.update(p => !p);
   }
 
-  public sendCredentials() {
+  public sendCredentials(): void {
     console.log(this.loginForm.get('email')?.value);
     console.log(this.loginForm.get('password')?.value);
+  }
+
+  public toggleLoginWith(): void {
+    this.loginWithUsername.update(l => !l);
+  }
+
+  public loginDisabled(): boolean {
+    const hasErrors = !!this.loginForm.errors;
+    const emailEmpty = this.loginForm.controls.email.value === '';
+    const usernameEmpty = this.loginForm.controls.username.value === '';
+    const isDisabled = hasErrors || (emailEmpty && usernameEmpty);
+
+    return isDisabled;
   }
 
 }
