@@ -1,7 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideIcons } from '@ng-icons/core';
 import {
   heroUserSolid,
@@ -16,12 +15,16 @@ import {
   heroCloudArrowUpSolid,
   heroTrashSolid
  } from '@ng-icons/heroicons/solid';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { headerInterceptor } from './interceptors/header-interceptor';
+import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, handledErrorsInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideClientHydration(withEventReplay()),
+    provideRouter(routes),
     provideIcons({
       heroUserSolid,
       heroEyeSolid,
