@@ -1,5 +1,6 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface SignInCredentials {
   emailOrUsername: string,
@@ -14,7 +15,7 @@ export interface SignUpData {
   dateofbirth: string,
   email: string,
   password: string,
-  avatar?: string
+  avatar?: File
 }
 
 export interface UserData {
@@ -38,16 +39,18 @@ export interface UserData {
 })
 export class Auth {
 
-  private httpClient = inject(HttpClient);
   private apiUrl = 'http://localhost:3000';
 
   public currentUser = signal<UserData | null>(null);
+
+  constructor(private readonly httpClient: HttpClient, private readonly router: Router) { }
 
   public signIn(credentials: SignInCredentials) {
     this.httpClient.post(this.apiUrl + '/auth/login', credentials).subscribe({
       next: (user) => {
         this.currentUser.set(user as UserData);
         console.log(this.currentUser());
+        this.router.navigateByUrl('/');
       },
       error: () => {
         console.log("[!] Fallo");
@@ -57,17 +60,50 @@ export class Auth {
 
   }
 
-  public signUp(credentials: SignUpData) {
-    this.httpClient.post(this.apiUrl + '/auth/register', credentials).subscribe({
+  public signUp(formData: FormData) {
+    this.httpClient.post(this.apiUrl + '/auth/register', formData).subscribe({
       next: (user) => {
         this.currentUser.set(user as UserData);
         console.log(this.currentUser());
+        this.router.navigate(['/']);
       },
-      error: () => {
+      error: (err) => {
+        console.log(err);
         console.log("[!] Fallo");
         this.currentUser.set(null);
       }
     });
+  }
+
+  public signOut() {
+    this.httpClient.post(this.apiUrl + '/auth/logout', {}).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.currentUser.set(null);
+        this.router.navigate(['/auth/login']);
+      },
+      error: (err) => {
+        console.log(err);
+        this.currentUser.set(null);
+        this.router.navigate(['/auth/login']);
+      }
+    })
+  }
+
+  public loadCurrentUser() {
+    return new Promise<void>((resolve) => {
+      this.httpClient.post(this.apiUrl + '/auth/data', {}).subscribe({
+        next: (user) => {
+          this.currentUser.set(user as UserData);
+          resolve();
+        },
+        error: (err) => {
+          console.log(err);
+          this.currentUser.set(null);
+          resolve();
+        }
+      });
+    })
   }
 
   public verifyJwt() {
