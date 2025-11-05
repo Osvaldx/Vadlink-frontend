@@ -1,7 +1,7 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { ButtonClickAnimation } from "../../../directives/button-click-animation";
 import { ValidateErrorsInput } from "../../../directives/validate-errors-input";
 import { ValidationEmail } from '../../../validators/email.validator';
@@ -13,7 +13,7 @@ import { Auth, SignInCredentials } from '../../../services/auth';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit{
 
   public loginWithUsername = signal<boolean>(false);
   public showPassword = signal<boolean>(false);
@@ -25,8 +25,14 @@ export class Login {
     password: new FormControl('', [Validators.required])
   })
 
-  constructor(private readonly authService: Auth) {
+  constructor(private readonly authService: Auth, private readonly router: Router) {
     this.loginForm.valueChanges.subscribe(() => this.checkLoginDisabled());
+  }
+
+  ngOnInit(): void {
+    if(this.authService.currentUser()) {
+      this.router.navigateByUrl('/', { replaceUrl: true });
+    }
   }
 
   public togglePassword(): void {
@@ -63,14 +69,16 @@ export class Login {
     const emailEmpty = this.isEmpty(controls.email.value);
     const usernameEmpty = this.isEmpty(controls.username.value);
     const passwordEmpty = this.isEmpty(controls.password.value);
-
-    const hasEmailError = (controls.email.errors) ? true : false;
-    const hasUsernameError = (controls.username.errors) ? true : false;
-    const hasPasswordError = (controls.password.errors) ? true : false;
-    const hasErrors = (emailEmpty) ? (hasUsernameError || hasPasswordError) : (hasEmailError || hasPasswordError);
-
-    const isDisabled = (((emailEmpty && usernameEmpty) || passwordEmpty) || hasErrors);
-
+  
+    const activeIsEmail = !this.loginWithUsername();
+  
+    const hasEmailError = activeIsEmail ? !!controls.email.errors : false;
+    const hasUsernameError = !activeIsEmail ? !!controls.username.errors : false;
+    const hasPasswordError = !!controls.password.errors;
+  
+    const hasErrors = hasEmailError || hasUsernameError || hasPasswordError;
+    const isDisabled = ((emailEmpty && usernameEmpty) || passwordEmpty || hasErrors);
+  
     this.formDisabled.set(isDisabled);
   }
 
