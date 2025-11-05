@@ -39,7 +39,7 @@ export interface UserData {
 })
 export class Auth {
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://vadlink-backend.vercel.app';
 
   public currentUser = signal<UserData | null>(null);
 
