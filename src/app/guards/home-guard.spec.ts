@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { authGuard } from './auth-guard';
+import { homeGuard } from './home-guard';
 
-describe('authGuard', () => {
+describe('homeGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+      TestBed.runInInjectionContext(() => homeGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
