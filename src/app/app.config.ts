@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideIcons } from '@ng-icons/core';
@@ -18,10 +18,17 @@ import {
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
 import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
+import { Auth } from './services/auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, handledErrorsInterceptor])),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (auth: Auth) => () => auth.loadCurrentUser(),
+      deps: [Auth],
+      multi: true,
+    },
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
