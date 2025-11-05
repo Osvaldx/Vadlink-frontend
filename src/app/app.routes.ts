@@ -1,12 +1,8 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './layouts/main-layout/main-layout';
+import { homeGuard } from './guards/home-guard';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'auth/login',
-        pathMatch: 'full'
-    },
     {
         path: 'auth',
         children: [
@@ -16,6 +12,7 @@ export const routes: Routes = [
     },
     {
         path: '',
+        canActivate: [homeGuard],
         component: MainLayout,
         children: [
             { path: 'posts', loadComponent: () => import('./pages/posts/posts').then(m => m.Posts) },
