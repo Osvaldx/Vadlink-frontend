@@ -1,0 +1,9 @@
+<button
+[routerLink]='router'
+routerLinkActive="active"
+#rla="routerLinkActive"
+[routerLinkActiveOptions]="{ exact: true }"
+[classList]="(rla.isActive && !isLogout) ? (styles + 'text-white') : styles">
+    <ng-icon [name]="nameIcon" />
+    <p class="text-sm">{{title}}</p>
+</button>
