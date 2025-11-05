@@ -21,6 +21,8 @@ import { Auth, SignUpData } from '../../../services/auth';
 export class Register {
 
   public showPassword = signal<boolean>(false);
+  public resetImage = signal<boolean>(false);
+  public maxDate = new Date().toISOString().split('T')[0];
 
   public registerForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
@@ -42,26 +44,25 @@ export class Register {
 
     const control = this.registerForm.controls;
 
-    // Mandar foto de perfil a cloudinary...
-
     if(!control.dateofbirth.value) return;
     const [year, month, day] = control.dateofbirth.value?.split('-').map(Number);
     const dateofbirth = new Date(year, month-1, day);
-    console.log(dateofbirth.toISOString());
 
-    let credentials: SignUpData = {
-      firstName: control.firstName.value!,
-      username: control.username.value!,
-      dateofbirth: dateofbirth.toISOString(),
-      email: control.email.value!,
-      password: control.password.value!
-    }
+    const formData = new FormData();
+    formData.append('firstName', control.firstName.value!);
+    formData.append('username', control.username.value!);
+    formData.append('dateofbirth', dateofbirth.toISOString());
+    formData.append('email', control.email.value!);
+    formData.append('password', control.password.value!);
 
-    if(control.lastName.value) credentials['lastName'] = control.lastName.value;
-    if(control.description.value) credentials['description'] = control.description.value;
-    // Acá subir la URL de la foto que se subio a cloudinary...
+    if (control.lastName.value) formData.append('lastName', control.lastName.value);
+    if (control.description.value) formData.append('description', control.description.value);
 
-    this.authService.signUp(credentials);
+    const file = control.avatar.value;
+    if (file) formData.append('avatar', file);
+    
+    this.authService.signUp(formData);
+    this.resetImage.set(true);
     this.registerForm.reset();
   }
 
