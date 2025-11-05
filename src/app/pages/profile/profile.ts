@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Auth, UserData } from '../../services/auth';
 
 @Component({
   selector: 'app-profile',
@@ -7,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './profile.css',
 })
 export class Profile {
+
+  public data!: UserData | null;
+
+  constructor(private readonly authService: Auth) {
+    if(authService.currentUser()) {
+      this.data = authService.currentUser();
+    }
+  }
 
 }
