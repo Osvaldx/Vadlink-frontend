@@ -1,4 +1,12 @@
-<button class="bg-blue-600 text-white font-bold m-2 px-2 py-1 rounded-2xl" (click)="logOut()">CERRAR SESION</button>
-<button class="bg-green-600 text-white font-bold m-2 px-2 py-1 rounded-2xl" routerLink='/profile'>IR A PERFIL</button>
-<button class="bg-red-600 text-white font-bold m-2 px-2 py-1 rounded-2xl" routerLink='/posts'>IR A PUBLICACIONES</button>
+<nav class="py-2 flex justify-center bg-transparent">
+    <div class="bg-linear-to-t from-neutral-950 to-neutral-600 px-2 rounded-2xl border border-neutral-900 flex items-center">
+        <app-nav-button nameIcon="faSolidCube" title="Inicio" router="/"></app-nav-button>
+        <div class="border border-neutral-600 w-0 h-[60%]"></div>
+        <app-nav-button nameIcon="faSolidImages" title="Publicaciones" router="/posts"></app-nav-button>
+        <div class="border border-neutral-600 w-0 h-[60%]"></div>
+        <app-nav-button nameIcon="faSolidUserGear" title="Perfil" router="/profile"></app-nav-button>
+        <div class="border border-neutral-600 w-0 h-[60%]"></div>
+        <app-nav-button nameIcon="faSolidCircleRight" title="Cerrar sesión" [isLogout]="true" (click)="logOut()"></app-nav-button>
+    </div>
+</nav>
 <router-outlet></router-outlet>
