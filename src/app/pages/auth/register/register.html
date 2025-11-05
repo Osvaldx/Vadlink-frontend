@@ -31,7 +31,7 @@
                 <div class="flex flex-col">
                     <label for="dateofbirth" class="relative top-2">Fecha de Nacimiento <span class="text-red-700">*</span></label>
                     <ng-icon name="heroCalendarDateRangeSolid" class="text-white! relative top-6 left-3"/>
-                    <input id="dateofbirth" formControlName="dateofbirth" type="date" autocomplete="off" placeholder="Ingrese su edad..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="dateofbirth">
+                    <input id="dateofbirth" formControlName="dateofbirth" type="date" [max]="maxDate" autocomplete="off" placeholder="Ingrese su edad..." class="border border-neutral-600 rounded-md placeholder:text-neutral-500 px-8 py-1.5 text-white" appValidateErrorsInput [formGroup]="registerForm" control="dateofbirth">
                 </div>
             </div>
             <div class="flex flex-col">
