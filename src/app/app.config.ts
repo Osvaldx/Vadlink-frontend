@@ -15,6 +15,7 @@ import {
   heroCloudArrowUpSolid,
   heroTrashSolid
  } from '@ng-icons/heroicons/solid';
+import { faSolidCube, faSolidUserGear, faSolidImages, faSolidCircleRight } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
 import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
@@ -43,7 +44,11 @@ export const appConfig: ApplicationConfig = {
       heroUsersSolid,
       heroChatBubbleBottomCenterTextSolid,
       heroCloudArrowUpSolid,
-      heroTrashSolid
+      heroTrashSolid,
+      faSolidCube,
+      faSolidUserGear,
+      faSolidImages,
+      faSolidCircleRight
     })
   ]
 };
