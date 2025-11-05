@@ -1,7 +1,8 @@
-import { Component, Input, OnDestroy, signal } from '@angular/core';
+import { Component, effect, Input, OnDestroy, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
 import { ValidateErrorsInput } from "../../directives/validate-errors-input";
+import { Register } from '../../pages/auth/register/register';
 
 @Component({
   selector: 'app-input-upload-image',
@@ -15,6 +16,12 @@ export class InputUploadImage implements OnDestroy{
   private _previewUrl: string | null = null;
 
   @Input() registerForm!: FormGroup;
+
+  constructor(private register: Register) {
+    effect(() => {
+      if(this.register.resetImage()) this.removeAvatar();
+    })
+  }
 
   public onAvatarSelected(e: Event): void {
     const input = e.target as HTMLInputElement;
