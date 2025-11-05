@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -52,8 +52,9 @@ export class Auth {
         console.log(this.currentUser());
         this.router.navigateByUrl('/');
       },
-      error: () => {
+      error: (err: HttpErrorResponse) => {
         console.log("[!] Fallo");
+        console.log(err);
         this.currentUser.set(null);
       }
     });
@@ -67,7 +68,7 @@ export class Auth {
         console.log(this.currentUser());
         this.router.navigate(['/']);
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         console.log(err);
         console.log("[!] Fallo");
         this.currentUser.set(null);
@@ -82,7 +83,7 @@ export class Auth {
         this.currentUser.set(null);
         this.router.navigate(['/auth/login']);
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         console.log(err);
         this.currentUser.set(null);
         this.router.navigate(['/auth/login']);
@@ -97,7 +98,7 @@ export class Auth {
           this.currentUser.set(user as UserData);
           resolve();
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {
           console.log(err);
           this.currentUser.set(null);
           resolve();
