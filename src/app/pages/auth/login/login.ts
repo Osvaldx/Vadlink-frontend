@@ -5,7 +5,8 @@ import { Router, RouterLink } from "@angular/router";
 import { ButtonClickAnimation } from "../../../directives/button-click-animation";
 import { ValidateErrorsInput } from "../../../directives/validate-errors-input";
 import { ValidationEmail } from '../../../validators/email.validator';
-import { Auth, SignInCredentials } from '../../../services/auth';
+import { Auth } from '../../../services/auth';
+import { SignInCredentials } from '../../../interfaces/sign-in-credentials';
 
 @Component({
   selector: 'app-login',

@@ -10,7 +10,7 @@ import { ButtonClickAnimation } from '../../../directives/button-click-animation
 import { ValidateErrorsInput } from '../../../directives/validate-errors-input';
 import { RouterLink } from '@angular/router';
 import { InputUploadImage } from "../../../components/input-upload-image/input-upload-image";
-import { Auth, SignUpData } from '../../../services/auth';
+import { Auth } from '../../../services/auth';
 
 @Component({
   selector: 'app-register',

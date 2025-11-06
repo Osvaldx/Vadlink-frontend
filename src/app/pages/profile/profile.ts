@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Auth, UserData } from '../../services/auth';
+import { Auth } from '../../services/auth';
+import { UserData } from '../../interfaces/user-data';
 
 @Component({
   selector: 'app-profile',
