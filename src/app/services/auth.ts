@@ -10,8 +10,8 @@ import { MessageManager } from './message-manager';
 })
 export class Auth {
 
-  // private apiUrl = 'https://vadlink-backend.vercel.app';
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://vadlink-backend.vercel.app';
+  // private apiUrl = 'http://localhost:3000';
 
   public currentUser = signal<UserData | null>(null);
 
