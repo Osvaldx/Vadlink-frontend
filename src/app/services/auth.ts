@@ -1,59 +1,36 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-
-export interface SignInCredentials {
-  emailOrUsername: string,
-  password: string
-}
-
-export interface SignUpData {
-  firstName: string,
-  lastName?: string,
-  username: string,
-  description?: string,
-  dateofbirth: string,
-  email: string,
-  password: string,
-  avatar?: File
-}
-
-export interface UserData {
-  _id: string,
-  firstName: string,
-  lastName: string,
-  username: string,
-  rol: string,
-  description: string,
-  dateofbirth: string,
-  email: string,
-  avatar: string,
-  avatar_id: string,
-  createDate: string,
-  __v: number,
-  password: string
-}
+import { UserData } from '../interfaces/user-data';
+import { SignInCredentials } from '../interfaces/sign-in-credentials';
+import { MessageManager } from './message-manager';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
 
-  private apiUrl = 'https://vadlink-backend.vercel.app';
+  // private apiUrl = 'https://vadlink-backend.vercel.app';
+  private apiUrl = 'http://localhost:3000';
 
   public currentUser = signal<UserData | null>(null);
 
-  constructor(private readonly httpClient: HttpClient, private readonly router: Router) { }
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly router: Router,
+    private readonly msgManager: MessageManager
+  ) { }
 
   public signIn(credentials: SignInCredentials) {
     this.httpClient.post(this.apiUrl + '/auth/login', credentials).subscribe({
       next: (user) => {
         this.currentUser.set(user as UserData);
+        this.msgManager.add('success', 'Inicio de sesión exitoso!', 3);
         console.log(this.currentUser());
         this.router.navigateByUrl('/');
       },
       error: (err: HttpErrorResponse) => {
-        console.log("[!] Fallo");
+        this.msgManager.add('error', err.error.message, 3);
         console.log(err);
         this.currentUser.set(null);
       }
@@ -65,12 +42,13 @@ export class Auth {
     this.httpClient.post(this.apiUrl + '/auth/register', formData).subscribe({
       next: (user) => {
         this.currentUser.set(user as UserData);
+        this.msgManager.add('success', 'Registro exitoso!', 3);
         console.log(this.currentUser());
         this.router.navigate(['/']);
       },
       error: (err: HttpErrorResponse) => {
+        this.msgManager.add('error', err.error.message, 3);
         console.log(err);
-        console.log("[!] Fallo");
         this.currentUser.set(null);
       }
     });
@@ -81,9 +59,11 @@ export class Auth {
       next: (res) => {
         console.log(res);
         this.currentUser.set(null);
+        this.msgManager.add('success', 'Cierre de sesión exitoso!', 3);
         this.router.navigate(['/auth/login']);
       },
       error: (err: HttpErrorResponse) => {
+        this.msgManager.add('error', err.error.message, 3);
         console.log(err);
         this.currentUser.set(null);
         this.router.navigate(['/auth/login']);
