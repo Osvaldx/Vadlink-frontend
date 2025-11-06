@@ -1,0 +1,5 @@
+<div class="flex flex-col items-center justify-center absolute right-0 m-5 gap-1">
+    @for (toast of toasts(); track toast.id) {
+        <app-toast-message [type]="toast.type" [message]="toast.message" [duration]="toast.duration" (closed)="removeToast(toast.id)"></app-toast-message>
+    }
+</div>
