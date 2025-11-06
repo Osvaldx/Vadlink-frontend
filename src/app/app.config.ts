@@ -13,9 +13,19 @@ import {
   heroUsersSolid,
   heroChatBubbleBottomCenterTextSolid,
   heroCloudArrowUpSolid,
-  heroTrashSolid
+  heroTrashSolid,
  } from '@ng-icons/heroicons/solid';
-import { faSolidCube, faSolidUserGear, faSolidImages, faSolidCircleRight } from '@ng-icons/font-awesome/solid';
+import { 
+  faSolidCube,
+  faSolidUserGear,
+  faSolidImages,
+  faSolidCircleRight,
+  faSolidCircleXmark,
+  faSolidCircleExclamation,
+  faSolidCircleCheck,
+  faSolidC,
+  faSolidCircleNotch
+ } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
 import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
@@ -48,7 +58,12 @@ export const appConfig: ApplicationConfig = {
       faSolidCube,
       faSolidUserGear,
       faSolidImages,
-      faSolidCircleRight
+      faSolidCircleRight,
+      faSolidCircleXmark,
+      faSolidCircleExclamation,
+      faSolidCircleCheck,
+      faSolidC,
+      faSolidCircleNotch
     })
   ]
 };
