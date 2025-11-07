@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NavButton } from "../nav-button/nav-button";
 import { Auth } from '../../services/auth';
-import { NgIcon } from "@ng-icons/core";
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [NavButton, NgIcon],
+  imports: [NavButton],
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.css',
 })
