@@ -5,11 +5,11 @@ export interface UserData {
     username: string
     rol: string
     description: string
-    dateofbirth: string
+    dateofbirth: Date
     email: string
     avatar: string
     avatar_id: string
-    createDate: string
+    createDate: Date
     __v: number
     password: string
 }
