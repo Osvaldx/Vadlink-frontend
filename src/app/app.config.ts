@@ -24,7 +24,12 @@ import {
   faSolidCircleExclamation,
   faSolidCircleCheck,
   faSolidC,
-  faSolidCircleNotch
+  faSolidCircleNotch,
+  faSolidBars,
+  faSolidPencil,
+  faSolidHeart,
+  faSolidEye,
+  faSolidCommentDots
  } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
@@ -63,7 +68,12 @@ export const appConfig: ApplicationConfig = {
       faSolidCircleExclamation,
       faSolidCircleCheck,
       faSolidC,
-      faSolidCircleNotch
+      faSolidCircleNotch,
+      faSolidBars,
+      faSolidPencil,
+      faSolidCommentDots,
+      faSolidEye,
+      faSolidHeart
     })
   ]
 };
