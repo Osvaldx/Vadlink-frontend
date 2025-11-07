@@ -1,0 +1,13 @@
+<nav class="py-2 flex justify-center items-center fixed w-full z-5">
+    <div class="bg-neutral-800/90 shadow-xl/20 px-2 rounded-2xl flex justify-evenly items-center w-[60%] max-sm:w-full max-sm:justify-between max-sm:px-8">
+        <div>
+            <img class="w-30 max-sm:w-20" src="assets/logo-name.png" alt="">
+        </div>
+        <div class="flex w-[50%] justify-center">
+            <app-nav-button nameIcon="faSolidCube" title="Inicio" router="/"></app-nav-button>
+            <app-nav-button nameIcon="faSolidImages" title="Publicaciones" router="/posts"></app-nav-button>
+            <app-nav-button nameIcon="faSolidUserGear" title="Mi Perfil" router="/profile"></app-nav-button>
+        </div>
+        <app-nav-button class="" nameIcon="faSolidCircleRight" title="Cerrar sesión" [isLogout]="true" (click)="logOut()"></app-nav-button>
+    </div>
+</nav>
