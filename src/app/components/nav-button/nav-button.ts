@@ -19,7 +19,7 @@ export class NavButton implements OnInit{
   
   ngOnInit(): void {
     if(this.isLogout) {
-      this.styles += 'text-red-400 hover:text-red-500 '
+      this.styles += 'bg-red-400 hover:bg-red-300 text-white hover:text-red-500 '
     } else {
       this.styles += 'text-neutral-400 hover:text-neutral-300 '
     }
