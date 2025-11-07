@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { NgIcon } from "@ng-icons/core";
 
 @Component({
@@ -15,5 +15,11 @@ export class CustomPost {
   @Input() avatar!: string;
   @Input() comment!: string;
   @Input() foto!: string;
+
+  public showComments = signal<boolean>(false);
+
+  public openComments() {
+    this.showComments.update(c => !c);
+  }
 
 }
