@@ -24,8 +24,8 @@ export class Auth {
   public signIn(credentials: SignInCredentials) {
     this.httpClient.post(this.apiUrl + '/auth/login', credentials).subscribe({
       next: (user) => {
-        this.currentUser.set(user as UserData);
         this.msgManager.add('success', 'Inicio de sesión exitoso!', 3);
+        this.currentUser.set(user as UserData);
         console.log(this.currentUser());
         this.router.navigateByUrl('/');
       },
@@ -41,8 +41,8 @@ export class Auth {
   public signUp(formData: FormData) {
     this.httpClient.post(this.apiUrl + '/auth/register', formData).subscribe({
       next: (user) => {
-        this.currentUser.set(user as UserData);
         this.msgManager.add('success', 'Registro exitoso!', 3);
+        this.currentUser.set(user as UserData);
         console.log(this.currentUser());
         this.router.navigate(['/']);
       },
@@ -57,9 +57,9 @@ export class Auth {
   public signOut() {
     this.httpClient.post(this.apiUrl + '/auth/logout', {}).subscribe({
       next: (res) => {
+        this.msgManager.add('success', 'Cierre de sesión exitoso!', 3);
         console.log(res);
         this.currentUser.set(null);
-        this.msgManager.add('success', 'Cierre de sesión exitoso!', 3);
         this.router.navigate(['/auth/login']);
       },
       error: (err: HttpErrorResponse) => {
