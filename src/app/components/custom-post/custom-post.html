@@ -1,0 +1,35 @@
+<div class="p-4 sm:p-5 text-neutral-300">
+    <div class="bg-neutral-800 rounded-2xl p-5 mb-6 shadow-md transition-all duration-300 hover:bg-neutral-900">
+        <div class="flex items-center gap-3 mb-3">
+            <img [src]="avatar" alt="[!] avatar" class="size-12 rounded-full border-2 border-neutral-600 object-cover"/>
+            <div>
+                <p class="text-neutral-100 font-semibold text-lg leading-none">{{firstName}} {{lastName}}</p>
+                <p class="text-neutral-400 text-sm leading-none">@{{username}}</p>
+            </div>
+            <span class="text-neutral-500 text-sm ml-auto">Hace 5 min</span>
+        </div>
+        <p class="text-neutral-300 mb-4">{{comment}}</p>
+        <div class="rounded-xl overflow-hidden mb-4">
+            <img src="assets/banner.png" alt="Imagen del post" class="w-full object-cover" />
+        </div>
+        <div class="flex items-center justify-between border-t border-neutral-800 pt-3">
+            <div class="flex gap-6">
+                <button class="flex items-center gap-1 text-red-400 hover:text-red-500 transition-colors duration-200 cursor-pointer">
+                    <ng-icon name="faSolidHeart"></ng-icon>
+                    <span>241k</span>
+                </button>
+                <button class="flex items-center gap-1 text-green-400 hover:text-green-500 transition-colors duration-200 cursor-pointer">
+                    <ng-icon name="faSolidCommentDots"></ng-icon>
+                    <span>45</span>
+                </button>
+                <button class="flex items-center gap-1 text-blue-400 hover:text-blue-500 transition-colors duration-200 cursor-pointer">
+                    <ng-icon name="faSolidEye"></ng-icon>
+                    <span>12</span>
+                </button>
+            </div>
+            <button class="flex items-center gap-2 text-neutral-400 hover:text-neutral-200 transition-colors duration-200">
+                <ng-icon name="faSolidShare"></ng-icon>
+            </button>
+        </div>
+    </div>
+</div>
