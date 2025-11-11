@@ -1,0 +1,10 @@
+<div class="flex flex-col items-center">
+    <p class="text-neutral-300 font-bold text-xl">{{title}}</p>
+    <div class="w-fit bg-neutral-800 rounded-2xl px-4 py-2">
+        @if (isDate) {
+            <p class="text-neutral-400 text-sm">{{(isDate) ? (data | date) : data}}</p>
+        } @else {
+            <p class="text-neutral-400 text-sm">{{(data) ? data : '...'}}</p>
+        }
+    </div>
+</div>
