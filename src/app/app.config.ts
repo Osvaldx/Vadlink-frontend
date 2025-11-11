@@ -28,8 +28,9 @@ import {
   faSolidBars,
   faSolidPencil,
   faSolidHeart,
-  faSolidEye,
-  faSolidCommentDots
+  faSolidShareFromSquare,
+  faSolidCommentDots,
+  faSolidTrash
  } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
@@ -72,8 +73,9 @@ export const appConfig: ApplicationConfig = {
       faSolidBars,
       faSolidPencil,
       faSolidCommentDots,
-      faSolidEye,
-      faSolidHeart
+      faSolidShareFromSquare,
+      faSolidHeart,
+      faSolidTrash
     })
   ]
 };
