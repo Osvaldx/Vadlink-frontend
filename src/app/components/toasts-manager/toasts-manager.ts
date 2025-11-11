@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ToastMessage } from '../toast-message/toast-message';
-import { ToastFormat } from '../../interfaces/toast-format';
 import { MessageManager } from '../../services/message-manager';
 
 @Component({
