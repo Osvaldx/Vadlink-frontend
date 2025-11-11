@@ -10,7 +10,8 @@ import { FindAllParams } from '../interfaces/find-all-params';
 })
 export class PostsService {
 
-  private postURL = 'http://localhost:3000/posts';
+  private postURL = 'https://vadlink-backend.vercel.app/posts';
+  // private postURL = 'http://localhost:3000/posts';
   private postsSubject = new BehaviorSubject<PostFormat[]>([]);
 
   constructor(private http: HttpClient, private msgManager: MessageManager) { }
