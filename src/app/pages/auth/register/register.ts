@@ -11,6 +11,7 @@ import { ValidateErrorsInput } from '../../../directives/validate-errors-input';
 import { RouterLink } from '@angular/router';
 import { InputUploadImage } from "../../../components/input-upload-image/input-upload-image";
 import { Auth } from '../../../services/auth';
+import { ValidateInvalidChars } from '../../../validators/username.validator';
 
 @Component({
   selector: 'app-register',
@@ -25,9 +26,9 @@ export class Register {
   public maxDate = new Date().toISOString().split('T')[0];
 
   public registerForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-    lastName: new FormControl(''),
-    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), ValidateInvalidChars()]),
+    lastName: new FormControl('', [ValidateInvalidChars()]),
+    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), ValidateInvalidChars()]),
     description: new FormControl('', [Validators.minLength(3), Validators.maxLength(20)]),
     dateofbirth: new FormControl('', [Validators.required, ValidateDateOfBirth()]),
     email: new FormControl('', [Validators.required, ValidationEmail()]),

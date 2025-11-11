@@ -7,6 +7,7 @@ import { ValidateErrorsInput } from "../../../directives/validate-errors-input";
 import { ValidationEmail } from '../../../validators/email.validator';
 import { Auth } from '../../../services/auth';
 import { SignInCredentials } from '../../../interfaces/sign-in-credentials';
+import { ValidateInvalidChars } from '../../../validators/username.validator';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class Login implements OnInit{
 
   public loginForm = new FormGroup({
     email: new FormControl('', [ValidationEmail()]),
-    username: new FormControl('', [Validators.minLength(3), Validators.maxLength(20)]),
+    username: new FormControl('', [Validators.minLength(3), Validators.maxLength(20), ValidateInvalidChars()]),
     password: new FormControl('', [Validators.required])
   })
 
