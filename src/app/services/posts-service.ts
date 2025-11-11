@@ -1,20 +1,43 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PostFormat } from '../interfaces/post-format';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MessageManager } from './message-manager';
+import { FindAllParams } from '../interfaces/find-all-params';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
 
-  private postURL = 'https://vadlink-backend.vercel.app/posts';
+  private postURL = 'http://localhost:3000/posts';
+  private postsSubject = new BehaviorSubject<PostFormat[]>([]);
 
   constructor(private http: HttpClient, private msgManager: MessageManager) { }
 
-  public findAllPostsWithUsername(username: string): Observable<PostFormat[]> {
-    return this.http.get<PostFormat[]>(this.postURL + `?username=${username}&limit=3`);
+  public findAllPosts(params: FindAllParams): Observable<PostFormat[]> {
+    let query = this.postURL + '?';
+
+    if(params.username) {
+      query += `&username=${params.username}`;
+    }
+    
+    if(params.likes) {
+      query += `&likes=${params.likes}`;
+    }
+
+    if(params.date) {
+      query += `&date=${params.date}`;
+    }
+    
+    if(params.offset) {
+      query += `&offset=${params.offset}`;
+    }
+    
+    if(params.limit) {
+      query += `&limit=${params.limit}`;
+    }
+    return this.http.get<PostFormat[]>(this.postURL + "?" + query);
   }
 
   public addLikePost(post_id: string) {
@@ -51,6 +74,22 @@ export class PostsService {
         console.log(err);
       }
     })
+  }
+
+  public getPostsLocal(params: FindAllParams) {
+    this.postsSubject.next([]);
+    this.findAllPosts(params).subscribe(posts => {
+      this.postsSubject.next(posts);
+    })
+  }
+
+  public postDeletedLocal(id: string) {
+    const updated = this.postsSubject.value.filter(p => p._id != id);
+    this.postsSubject.next(updated); 
+  }
+
+  public getPostsObservable() {
+    return this.postsSubject.asObservable();
   }
   
 }
