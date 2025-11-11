@@ -92,5 +92,24 @@ export class PostsService {
   public getPostsObservable() {
     return this.postsSubject.asObservable();
   }
+
+  public createPost(body: FormData) {
+    this.http.post<PostFormat>(this.postURL, body).subscribe({
+      next: (post) => {
+        console.log(post);
+        this.createPostLocal(post);
+        this.msgManager.add('success', 'Se publico correctamente!', 2);
+      },
+      error: (err) => {
+        console.log(err);
+        this.msgManager.add('error', 'No se pudo publicar la publicación', 2);
+      }
+    })
+  }
+
+  public createPostLocal(post: PostFormat) {
+    const updated = [post, ...this.postsSubject.value];
+    this.postsSubject.next(updated);
+  }
   
 }
