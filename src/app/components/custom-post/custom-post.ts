@@ -33,7 +33,6 @@ export class CustomPost implements OnInit{
     if(user) {
       this.user = user;
       this.liked = (this.post.likedBy.includes(this.user._id));
-      console.log(this.liked);
     }
   }
 
