@@ -40,7 +40,7 @@
             </div>
             @if (this.showImageFull()) {
                 <div class="overflow-hidden mb-4 flex flex-col items-center fixed inset-0 justify-center bg-black/80 cursor-pointer" (click)="toggleImageFull()">
-                    <img [src]="post.url_img" alt="Imagen del post" class="rounded-2xl sm:w-fit w-full object-cover cursor-pointer" />
+                    <img [src]="post.url_img" alt="Imagen del post" class="rounded-2xl w-[1000px] max-sm:w-full object-cover cursor-pointer" />
                 </div>
             }
         }
