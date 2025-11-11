@@ -3,15 +3,15 @@
         <div class="flex items-center gap-3 mb-3">
             <img [src]="post.user_id.avatar" alt="[!] avatar" class="size-12 rounded-full border-2 border-neutral-600 object-cover"/>
             <div>
-                <p class="text-neutral-100 font-semibold text-lg leading-none">{{post.user_id.firstName}} {{post.user_id.lastName}}</p>
-                <p class="text-neutral-400 text-sm leading-none">@{{post.user_id.username}}</p>
+                <p class="text-neutral-100 font-semibold text-lg leading-none max-sm:text-sm">{{post.user_id.firstName}} {{post.user_id.lastName}}</p>
+                <p class="text-neutral-400 text-xs leading-none">@{{post.user_id.username}}</p>
             </div>
             <div class="ml-auto ">
-                <span class="text-neutral-500 text-sm">{{post.created_at | date}}</span>
+                <span class="text-neutral-500 text-sm max-sm:text-[10px]">{{post.created_at | date}}</span>
                 @if (this.user.username === post.user_id.username) {
                     <div class="flex justify-center items-center">
                         <div class="bg-red-300 rounded-2xl px-2 py-1 flex cursor-pointer" (click)="showModal()">
-                            <ng-icon name="faSolidTrash" class="size-5! text-red-500!"></ng-icon>
+                            <ng-icon name="faSolidTrash" class="size-5! text-red-500! max-sm:size-4!"></ng-icon>
                         </div>
                         @if (showDeleteOptions()) {
                             <div class="bg-black/60 fixed inset-0 flex items-center justify-center">
@@ -32,8 +32,8 @@
                 }
             </div>
         </div>
-        <h4 class="text-white font-semibold text-2xl max-sm:text-xl">{{post.title}}</h4>
-        <p class="text-neutral-300 mb-4 text-md max-sm:text-sm">{{post.description}}</p>
+        <h4 class="text-white font-semibold text-2xl max-sm:text-sm">{{post.title}}</h4>
+        <p class="text-neutral-300 mb-4 text-md max-sm:text-xs">{{post.description}}</p>
         @if (post.url_img) {
             <div class="overflow-hidden mb-4 flex flex-col items-center">
                 <img [src]="post.url_img" alt="Imagen del post" class="rounded-2xl sm:w-fit w-full object-cover cursor-pointer" (click)="toggleImageFull()" />
