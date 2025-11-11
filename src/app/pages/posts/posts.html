@@ -1,6 +1,18 @@
 <section class="bg-neutral-800 min-h-screen">
     <div class="w-full flex justify-center pt-20">
         <div class="w-[80%] max-sm:w-[90%] max-w-[900px] bg-neutral-700 rounded-2xl overflow-hidden relative">
+            <app-post-form [user]="user"></app-post-form>
+            <div class="flex items-center justify-center">
+                <div class="flex items-center justify-between gap-3 w-[80%] max-sm:w-full bg-neutral-800 border border-neutral-700 rounded-xl p-3 mt-4 text-neutral-300 max-sm:flex-col">
+                    <label for="filter" class="font-semibold text-lg max-sm:text-xs">Filtrar publicaciones por:</label>
+                    <select id="filter" (change)="FilterPosts($event)" class="bg-neutral-900/60 border border-neutral-700 rounded-md px-3 py-1.5 text-neutral-200 text-sm cursor-pointer focus:outline-none focus:border-neutral-400 hover:border-neutral-500 transition-all duration-200">
+                        <option value="date-desc" selected>Fecha (más recientes)</option>
+                        <option value="date-asc">Fecha (más antiguas)</option>
+                        <option value="like-desc">Likes (más likes)</option>
+                        <option value="like-asc">Likes (menos likes)</option>
+                    </select>
+                </div>
+            </div>
             @for (post of posts$ | async; track $index) {
                 <app-custom-post [post]="post"></app-custom-post>
             }
