@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PostFormat } from '../../interfaces/post-format';
 import { PostsService } from '../../services/posts-service';
 import { AsyncPipe } from '@angular/common';
