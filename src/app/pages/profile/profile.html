@@ -20,43 +20,15 @@
             </div>
             <div class="w-full h-0.5 bg-neutral-800 mt-4 mb-4"></div>
             <div class="flex justify-evenly max-sm:flex-col max-sm:gap-3">
-                <div class="flex flex-col items-center">
-                    <p class="text-neutral-300 font-bold text-xl">Descripción:</p>
-                    <div class="w-fit bg-neutral-800 rounded-2xl px-4 py-2">
-                        <p class="text-neutral-400 text-sm">{{data?.description}}</p>
-                    </div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <p class="text-neutral-300 font-bold text-xl">Miembro desde:</p>
-                    <div class="w-fit bg-neutral-800 rounded-2xl px-4 py-2">
-                        <p class="text-neutral-400 text-sm">{{create_at | date}}</p>
-                    </div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <p class="text-neutral-300 font-bold text-xl">Cumpleaños:</p>
-                    <div class="w-fit bg-neutral-800 rounded-2xl px-4 py-2">
-                        <p class="text-neutral-400 text-sm">{{dateofbirth | date}}</p>
-                    </div>
-                </div>
+                <app-info-profile title="Descripción:" [data]="data?.description"></app-info-profile>
+                <app-info-profile title="Miembro desde:" [data]="data?.createDate" [isDate]="true"></app-info-profile>
+                <app-info-profile title="Cumpleaños:" [data]="data?.dateofbirth" [isDate]="true"></app-info-profile>
             </div>
             <div class="w-full h-0.5 bg-neutral-800 mt-4 mb-4"></div>
             <!-- publicaciones -->
-            <app-custom-post
-                [firstName]="data?.firstName ?? ''"
-                [lastName]="data?.lastName ?? ''"
-                [username]="data?.username ?? ''"
-                [avatar]="data?.avatar ?? ''"
-                foto="assets/banner.png"
-                comment="Este es un ejemplo de publicación Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia temporibus ut fugiat! Voluptas suscipit reiciendis tempore vero amet ullam, blanditiis, veritatis nihil fugiat asperiores hic voluptates quidem quos distinctio molestias."
-            ></app-custom-post>
-            <app-custom-post
-                [firstName]="data?.firstName ?? ''"
-                [lastName]="data?.lastName ?? ''"
-                [username]="data?.username ?? ''"
-                [avatar]="data?.avatar ?? ''"
-                foto="assets/banner.png"
-                comment="Este es un ejemplo de publicación Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia temporibus ut fugiat! Voluptas suscipit reiciendis tempore vero amet ullam, blanditiis, veritatis nihil fugiat asperiores hic voluptates quidem quos distinctio molestias."
-            ></app-custom-post>
+            @for (post of posts$ | async; track $index) {
+                <app-custom-post [user]="data!" [post]="post" (postDeleted)="postDeleted($event)"></app-custom-post>
+            }
         </div>
     </div>
 </section>
