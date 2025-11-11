@@ -61,6 +61,7 @@ export class CustomPost implements OnInit{
   }
 
   public deletePost() {
+    this.postService.postDeletedLocal(this.post._id);
     this.postService.deletePost(this.post._id);
     this.showDeleteOptions.set(false);
     this.postDeleted.emit(this.post._id);
