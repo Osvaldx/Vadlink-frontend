@@ -27,7 +27,7 @@
             <div class="w-full h-0.5 bg-neutral-800 mt-4 mb-4"></div>
             <!-- publicaciones -->
             @for (post of posts$ | async; track $index) {
-                <app-custom-post [user]="data!" [post]="post" (postDeleted)="postDeleted($event)"></app-custom-post>
+                <app-custom-post [post]="post" (postDeleted)="postDeleted($event)"></app-custom-post>
             }
         </div>
     </div>
