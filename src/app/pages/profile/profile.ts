@@ -21,8 +21,7 @@ export class Profile implements OnInit{
   public create_at!: Date;
   public dateofbirth!: Date;
 
-  private postsSubject = new BehaviorSubject<PostFormat[]>([]);
-  public posts$ = this.postsSubject.asObservable();
+  public posts$!: Observable<PostFormat[]>
 
   constructor(private readonly authService: Auth, private readonly postsService: PostsService) { }
 
@@ -34,19 +33,15 @@ export class Profile implements OnInit{
     }
     
     this.getPosts();
+    this.posts$ = this.postsService.getPostsObservable();
   }
 
   public getPosts() {
-    if(this.data) {
-      this.postsService.findAllPostsWithUsername(this.data.username).subscribe(posts => {
-        this.postsSubject.next(posts);
-      })
-    }
+    this.postsService.getPostsLocal({ username: this.data?.username });
   }
 
   public postDeleted(id: string) {
-    const updated = this.postsSubject.value.filter(p => p._id != id);
-    this.postsSubject.next(updated); 
+    this.postsService.postDeletedLocal(id);
   }
 
 }
