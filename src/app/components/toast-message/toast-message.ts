@@ -19,7 +19,7 @@ export class ToastMessage implements OnInit{
 
   public icon!: string;
   public isDead = signal<boolean>(false);
-  public styles: string = 'min-w-[150px] max-w-[330px] px-3 py-2 transition-all duration-800 font-bold rounded-xl animate-fade-in-left ';
+  public styles: string = 'z-40 min-w-[150px] max-w-[330px] px-3 py-2 transition-all duration-800 font-bold rounded-xl animate-fade-in-left ';
   public stylesX: string = 'select-none px-1 rounded-xl cursor-pointer ';
 
   public toastDuration = signal<number>(0);
