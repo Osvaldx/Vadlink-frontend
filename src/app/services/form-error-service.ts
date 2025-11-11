@@ -34,6 +34,10 @@ export class FormErrorService {
       return `[!] El maximo de caracteres es: ${details.requiredLength}`;
     }
 
+    else if(errors['invalidChar']) {
+      return '[!] No se permiten caracteres especiales';
+    }
+
     else if(errors['passwordWrong']) {
       const details = errors['passwordWrong'];
       if(!details.hasMinLength) return '[!] La contraseña tiene que ser mayor a 8 caracteres!';
