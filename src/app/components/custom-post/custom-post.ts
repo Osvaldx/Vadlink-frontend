@@ -3,31 +3,38 @@ import { NgIcon } from "@ng-icons/core";
 import { PostFormat } from '../../interfaces/post-format';
 import { UserData } from '../../interfaces/user-data';
 import { PostsService } from '../../services/posts-service';
+import { Auth } from '../../services/auth';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-custom-post',
-  imports: [NgIcon],
+  imports: [NgIcon, DatePipe],
   templateUrl: './custom-post.html',
   styleUrl: './custom-post.css',
 })
 export class CustomPost implements OnInit{
 
-  @Input() user!: UserData;
   @Input() post!: PostFormat;
   @Output() postDeleted = new EventEmitter<string>();
   
   public liked!: boolean;
   public likeStyles = 'flex items-center gap-1 hover:text-red-400 transition-colors duration-200 cursor-pointer ';
+  public user!: UserData;
 
   public showComments = signal<boolean>(false);
   public showImageFull = signal<boolean>(false);
   public showDeleteOptions = signal<boolean>(false);
   
-  constructor(private readonly postService: PostsService) {
+  constructor(private readonly postService: PostsService, private readonly authService: Auth) {
   }
   
   ngOnInit(): void {
-    this.liked = (this.post.likedBy.includes(this.user._id));
+    const user = this.authService.currentUser()
+    if(user) {
+      this.user = user;
+      this.liked = (this.post.likedBy.includes(this.user._id));
+      console.log(this.liked);
+    }
   }
 
   public toggleImageFull() {
