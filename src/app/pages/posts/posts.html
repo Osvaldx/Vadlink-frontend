@@ -1,0 +1,9 @@
+<section class="bg-neutral-800 min-h-full">
+    <div class="w-full flex justify-center pt-20">
+        <div class="w-[80%] max-sm:w-[90%] max-w-[900px] bg-neutral-700 rounded-2xl overflow-hidden relative">
+            @for (post of posts$ | async; track $index) {
+                <app-custom-post [post]="post"></app-custom-post>
+            }
+        </div>
+    </div>
+</section>
