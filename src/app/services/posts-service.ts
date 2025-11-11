@@ -38,7 +38,7 @@ export class PostsService {
     if(params.limit) {
       query += `&limit=${params.limit}`;
     }
-    return this.http.get<PostFormat[]>(this.postURL + "?" + query);
+    return this.http.get<PostFormat[]>(query);
   }
 
   public addLikePost(post_id: string) {
