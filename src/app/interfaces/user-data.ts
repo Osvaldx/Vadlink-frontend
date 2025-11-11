@@ -12,4 +12,6 @@ export interface UserData {
     createDate: Date
     __v: number
     password: string
+    banner: string
+    banner_id: string
 }
