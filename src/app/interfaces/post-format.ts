@@ -1,3 +1,5 @@
+import { PostUser } from "./post-user";
+
 export interface PostFormat {
     _id: string;
     title: string;
@@ -6,8 +8,7 @@ export interface PostFormat {
     url_img_id?: string;
     likes: number;
     shared: number;
-    user_id: string;
-    username: string;
+    user_id: PostUser;
     likedBy: string[];
     isDeleted: boolean;
     created_at: Date;
