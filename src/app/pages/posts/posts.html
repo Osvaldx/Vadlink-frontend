@@ -16,6 +16,11 @@
             @for (post of posts$ | async; track $index) {
                 <app-custom-post [post]="post"></app-custom-post>
             }
+            <div class="flex justify-center py-6">
+                <button (click)="loadMore()" class="disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:text-neutral-600 px-5 py-2 rounded-md bg-neutral-800 hover:bg-neutral-300 hover:text-neutral-900 text-neutral-200 text-sm font-semibold transition-all duration-200 cursor-pointer" [disabled]="loading">
+                    Cargar más
+                </button>
+            </div>
         </div>
     </div>
 </section>
