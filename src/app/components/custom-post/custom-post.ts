@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { NgIcon } from "@ng-icons/core";
 import { PostFormat } from '../../interfaces/post-format';
 import { UserData } from '../../interfaces/user-data';
@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './custom-post.html',
   styleUrl: './custom-post.css',
 })
-export class CustomPost implements OnInit{
+export class CustomPost implements OnInit, OnChanges{
 
   @Input() post!: PostFormat;
   @Output() postDeleted = new EventEmitter<string>();
@@ -33,11 +33,13 @@ export class CustomPost implements OnInit{
     if(user) {
       this.user = user;
     }
+  }
 
-    setTimeout(() => {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['post'] && this.post) {
       this.liked.set(this.post.liked);
       console.log(this.liked());
-    }, 300);
+    }
   }
 
   public toggleImageFull() {
