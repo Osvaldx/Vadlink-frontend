@@ -18,7 +18,7 @@ export class Posts implements OnInit{
 
   public posts$!: Observable<PostFormat[]>
   public user!: UserData;
-  public limit = 1;
+  public limit = 5;
   public offset = 0;
   public loading = true;
 
