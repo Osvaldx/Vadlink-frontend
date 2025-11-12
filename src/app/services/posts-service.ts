@@ -77,11 +77,15 @@ export class PostsService {
     })
   }
 
-  public getPostsLocal(params: FindAllParams) {
-    this.postsSubject.next([]);
+  public getPostsLocal(params: FindAllParams, append: boolean) {
     this.findAllPosts(params).subscribe(posts => {
-      this.postsSubject.next(posts);
-    })
+      if (append) {
+        const updated = [...this.postsSubject.value, ...posts];
+        this.postsSubject.next(updated);
+      } else {
+        this.postsSubject.next(posts);
+      }
+    });
   }
 
   public postDeletedLocal(id: string) {
