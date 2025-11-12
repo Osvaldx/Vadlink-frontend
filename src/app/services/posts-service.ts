@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PostFormat } from '../interfaces/post-format';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -12,6 +12,7 @@ export class PostsService {
 
   private postURL = 'https://vadlink-backend.vercel.app/posts';
   // private postURL = 'http://localhost:3000/posts';
+
   private postsSubject = new BehaviorSubject<PostFormat[]>([]);
 
   constructor(private http: HttpClient, private msgManager: MessageManager) { }
