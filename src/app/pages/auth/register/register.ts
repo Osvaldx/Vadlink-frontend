@@ -29,7 +29,7 @@ export class Register {
     firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), ValidateInvalidChars()]),
     lastName: new FormControl('', [ValidateInvalidChars()]),
     username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), ValidateInvalidChars()]),
-    description: new FormControl('', [Validators.minLength(3), Validators.maxLength(20)]),
+    description: new FormControl('', [Validators.minLength(1), Validators.maxLength(100)]),
     dateofbirth: new FormControl('', [Validators.required, ValidateDateOfBirth()]),
     email: new FormControl('', [Validators.required, ValidationEmail()]),
     password: new FormControl('', [Validators.required, ValidatepasswordWrong()]),
