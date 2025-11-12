@@ -18,6 +18,9 @@ export class Posts implements OnInit{
 
   public posts$!: Observable<PostFormat[]>
   public user!: UserData;
+  public limit = 1;
+  public offset = 0;
+  public loading = true;
 
   constructor(private readonly postsService: PostsService, private readonly authService: Auth) { }
 
@@ -27,24 +30,36 @@ export class Posts implements OnInit{
       this.user = userOrNull;
     }
 
-    this.postsService.getPostsLocal({ date: 'desc', limit: 10 });
+    this.loadPosts(false);
     this.posts$ = this.postsService.getPostsObservable();
+  }
+
+  private loadPosts(append: boolean) {
+    this.loading = true;
+    this.postsService.getPostsLocal({ date: 'desc', limit: this.limit, offset: this.offset }, append);
+    this.loading = false;
+  }
+
+  public loadMore() {
+    this.offset += this.limit;
+    this.loadPosts(true);
   }
 
   public FilterPosts(e: Event) {
     const select = e.target as HTMLSelectElement;
     const value = select.value;
-
     const [tipo, a] = value.split('-');
 
     const ascOrDesc = (a == 'asc') ? 'asc' : 'desc'
 
+    this.offset = 0;
+
     switch(tipo) {
       case 'date':
-        this.postsService.getPostsLocal({ date: ascOrDesc })
+        this.postsService.getPostsLocal({ date: ascOrDesc, limit: this.limit, offset: this.offset }, false);
         break;
-        case 'like':
-        this.postsService.getPostsLocal({ likes: ascOrDesc })
+      case 'like':
+        this.postsService.getPostsLocal({ likes: ascOrDesc, limit: this.limit, offset: this.offset }, false);
         break;
     }
   }
