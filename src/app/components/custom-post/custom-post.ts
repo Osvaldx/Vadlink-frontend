@@ -17,7 +17,7 @@ export class CustomPost implements OnInit{
   @Input() post!: PostFormat;
   @Output() postDeleted = new EventEmitter<string>();
   
-  public liked!: boolean;
+  public liked = signal<boolean>(false);
   public likeStyles = 'flex items-center gap-1 hover:text-red-400 transition-colors duration-200 cursor-pointer ';
   public user!: UserData;
 
@@ -32,8 +32,12 @@ export class CustomPost implements OnInit{
     const user = this.authService.currentUser()
     if(user) {
       this.user = user;
-      this.liked = (this.post.likedBy.includes(this.user._id));
     }
+
+    setTimeout(() => {
+      this.liked.set(this.post.liked);
+      console.log(this.liked());
+    }, 300);
   }
 
   public toggleImageFull() {
@@ -45,11 +49,11 @@ export class CustomPost implements OnInit{
   }
 
   public addLikeorRemoveLike() {
-    this.liked = !this.liked;
+    this.liked.update(l => !l);
   
-    this.post.likes += this.liked ? 1 : -1;
+    this.post.likes += this.liked() ? 1 : -1;
   
-    if (this.liked) {
+    if (this.liked()) {
       this.postService.addLikePost(this.post._id);
     } else {
       this.postService.removeLikePost(this.post._id);
