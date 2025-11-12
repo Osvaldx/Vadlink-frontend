@@ -32,7 +32,7 @@ export class Register {
     description: new FormControl('', [Validators.minLength(1), Validators.maxLength(100)]),
     dateofbirth: new FormControl('', [Validators.required, ValidateDateOfBirth()]),
     email: new FormControl('', [Validators.required, ValidationEmail()]),
-    password: new FormControl('', [Validators.required, ValidatepasswordWrong()]),
+    password: new FormControl('', [Validators.required, Validators.maxLength(100) ,ValidatepasswordWrong()]),
     repeatPassword: new FormControl('', [Validators.required, ValidatepasswordWrong()]),
     avatar: new FormControl<File | null>(null, [ValidateImageFile({ maxSizeMB: 2, allowedTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'] })])
   },
