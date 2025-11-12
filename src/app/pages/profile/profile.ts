@@ -6,7 +6,7 @@ import { CustomPost } from "../../components/custom-post/custom-post";
 import { InfoProfile } from '../../components/info-profile/info-profile';
 import { PostsService } from '../../services/posts-service';
 import { PostFormat } from '../../interfaces/post-format';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -37,7 +37,7 @@ export class Profile implements OnInit{
   }
 
   public getPosts() {
-    this.postsService.getPostsLocal({ username: this.data?.username });
+    this.postsService.getPostsLocal({ username: this.data?.username }, false);
   }
 
   public postDeleted(id: string) {
