@@ -46,7 +46,7 @@
         }
         <div class="flex items-center justify-between border-t border-neutral-600 pt-3">
             <div class="flex gap-6">
-                <button [classList]="this.liked ? this.likeStyles + 'text-red-400' : this.likeStyles + 'text-neutral-400'" (click)="addLikeorRemoveLike()">
+                <button [classList]="this.liked() ? this.likeStyles + 'text-red-400' : this.likeStyles + 'text-neutral-400'" (click)="addLikeorRemoveLike()">
                     <ng-icon name="faSolidHeart"></ng-icon>
                     <span >{{post.likes}}</span>
                 </button>
