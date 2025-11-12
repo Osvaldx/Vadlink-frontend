@@ -10,6 +10,7 @@ export interface PostFormat {
     shared: number;
     user_id: PostUser;
     likedBy: string[];
+    liked: boolean;
     isDeleted: boolean;
     created_at: Date;
     __v: number;
