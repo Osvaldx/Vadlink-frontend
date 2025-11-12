@@ -20,7 +20,7 @@ export class PostForm implements OnDestroy{
   private _previewUrl: string | null = null;
 
   public postForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
+    title: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]),
     description: new FormControl('', [Validators.minLength(1), Validators.maxLength(2000)]),
     image: new FormControl<File | null>(null, [ValidateImageFile({ maxSizeMB: 2, allowedTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'] })])
   })
