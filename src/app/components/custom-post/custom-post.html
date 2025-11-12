@@ -32,8 +32,8 @@
                 }
             </div>
         </div>
-        <h4 class="text-white font-semibold text-2xl max-sm:text-sm">{{post.title}}</h4>
-        <p class="text-neutral-300 mb-4 text-md max-sm:text-xs">{{post.description}}</p>
+        <h4 class="text-white font-semibold text-2xl max-sm:text-sm wrap-break-word">{{post.title}}</h4>
+        <p class="text-neutral-300 mb-4 text-md max-sm:text-xs wrap-break-word">{{post.description}}</p>
         @if (post.url_img) {
             <div class="overflow-hidden mb-4 flex flex-col items-center">
                 <img [src]="post.url_img" alt="Imagen del post" class="rounded-2xl sm:w-fit w-full object-cover cursor-pointer" (click)="toggleImageFull()" />
