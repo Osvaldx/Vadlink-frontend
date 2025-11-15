@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostFormat } from '../../interfaces/post-format';
 import { PostsService } from '../../services/posts-service';
@@ -16,11 +16,13 @@ import { PostForm } from "../../components/post-form/post-form";
 })
 export class Posts implements OnInit{
 
-  public posts$!: Observable<PostFormat[]>
+  public posts$!: Observable<PostFormat[]>;
   public user!: UserData;
   public limit = 5;
   public offset = 0;
   public loading = true;
+  public totalPosts!: number;
+  public loadedPosts: number = 0;
 
   constructor(private readonly postsService: PostsService, private readonly authService: Auth) { }
 
@@ -32,17 +34,28 @@ export class Posts implements OnInit{
 
     this.loadPosts(false);
     this.posts$ = this.postsService.getPostsObservable();
+    
+    this.postsService.getTotalObservable().subscribe(total => {
+      this.totalPosts = total;
+    })
   }
 
   private loadPosts(append: boolean) {
     this.loading = true;
     this.postsService.getPostsLocal({ date: 'desc', limit: this.limit, offset: this.offset }, append);
+    this.loadedPosts += this.limit;
     this.loading = false;
   }
 
   public loadMore() {
+    if(this.loadMoreDisabled()) return;
+
     this.offset += this.limit;
     this.loadPosts(true);
+  }
+
+  public loadMoreDisabled() {
+    return (this.totalPosts === this.loadedPosts);
   }
 
   public FilterPosts(e: Event) {
