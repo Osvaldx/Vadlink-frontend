@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { PostFormat } from '../interfaces/post-format';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MessageManager } from './message-manager';
 import { FindAllParams } from '../interfaces/find-all-params';
+import { GetPostsFormat } from '../interfaces/get-posts-format';
+import { rmSync } from 'fs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +16,11 @@ export class PostsService {
   // private postURL = 'http://localhost:3000/posts';
 
   private postsSubject = new BehaviorSubject<PostFormat[]>([]);
+  private totalSubject = new BehaviorSubject<number>(0);
 
   constructor(private http: HttpClient, private msgManager: MessageManager) { }
 
-  public findAllPosts(params: FindAllParams): Observable<PostFormat[]> {
+  public findAllPosts(params: FindAllParams): Observable<GetPostsFormat> {
     let query = this.postURL + '?';
 
     if(params.username) {
@@ -39,7 +42,7 @@ export class PostsService {
     if(params.limit) {
       query += `&limit=${params.limit}`;
     }
-    return this.http.get<PostFormat[]>(query);
+    return this.http.get<GetPostsFormat>(query);
   }
 
   public addLikePost(post_id: string) {
@@ -79,12 +82,14 @@ export class PostsService {
   }
 
   public getPostsLocal(params: FindAllParams, append: boolean) {
-    this.findAllPosts(params).subscribe(posts => {
+    this.findAllPosts(params).subscribe(response => {
       if (append) {
-        const updated = [...this.postsSubject.value, ...posts];
+        const updated = [...this.postsSubject.value, ...response.posts];
         this.postsSubject.next(updated);
+        this.totalSubject.next(response.total);
       } else {
-        this.postsSubject.next(posts);
+        this.postsSubject.next(response.posts);
+        this.totalSubject.next(response.total);
       }
     });
   }
@@ -92,6 +97,7 @@ export class PostsService {
   public postDeletedLocal(id: string) {
     const updated = this.postsSubject.value.filter(p => p._id != id);
     this.postsSubject.next(updated); 
+    this.totalSubject.next(this.totalSubject.value - 1);
   }
 
   public getPostsObservable() {
@@ -115,6 +121,11 @@ export class PostsService {
   public createPostLocal(post: PostFormat) {
     const updated = [post, ...this.postsSubject.value];
     this.postsSubject.next(updated);
+    this.totalSubject.next(this.totalSubject.value + 1);
+  }
+
+  public getTotalObservable() {
+    return this.totalSubject.asObservable();
   }
   
 }
