@@ -38,7 +38,6 @@ export class CustomPost implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post'] && this.post) {
       this.liked.set(this.post.liked);
-      console.log(this.liked());
     }
   }
 
