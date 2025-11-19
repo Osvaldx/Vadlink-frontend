@@ -13,5 +13,6 @@ export interface UserData {
     __v: number
     password: string
     banner: string
-    banner_id: string
+    banner_id: string,
+    exp: number
 }
