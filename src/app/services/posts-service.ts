@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PostFormat } from '../interfaces/post-format';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MessageManager } from './message-manager';
 import { FindAllParams } from '../interfaces/find-all-params';
 import { GetPostsFormat } from '../interfaces/get-posts-format';
-import { rmSync } from 'fs';
 
 @Injectable({
   providedIn: 'root',
