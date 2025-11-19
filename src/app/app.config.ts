@@ -34,17 +34,17 @@ import {
  } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
-import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
-import { Auth } from './services/auth';
+// import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
+// import { Auth } from './services/auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (auth: Auth) => () => auth.loadCurrentUser(),
-      deps: [Auth],
-      multi: true,
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: (auth: Auth) => () => auth.loadCurrentUser(),
+    //   deps: [Auth],
+    //   multi: true,
+    // },
     provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
