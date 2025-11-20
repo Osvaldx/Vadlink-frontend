@@ -5,10 +5,11 @@ import { UserData } from '../../interfaces/user-data';
 import { PostsService } from '../../services/posts-service';
 import { Auth } from '../../services/auth';
 import { DatePipe } from '@angular/common';
+import { CommentsComponent } from "../comments/comments";
 
 @Component({
   selector: 'app-custom-post',
-  imports: [NgIcon, DatePipe],
+  imports: [NgIcon, DatePipe, CommentsComponent],
   templateUrl: './custom-post.html',
   styleUrl: './custom-post.css',
 })
@@ -70,6 +71,10 @@ export class CustomPost implements OnInit, OnChanges{
     this.postService.deletePost(this.post._id);
     this.showDeleteOptions.set(false);
     this.postDeleted.emit(this.post._id);
+  }
+
+  public addCommentLocal() {
+    this.post.commentsCount++;
   }
 
 }
