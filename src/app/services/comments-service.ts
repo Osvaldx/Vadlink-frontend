@@ -9,7 +9,8 @@ import { CommentFormat } from '../interfaces/comment-format';
 })
 export class CommentsService {
 
-  private apiUrl = 'http://localhost:3000/comments';
+  private apiUrl = 'https://vadlink-backend.vercel.app/comments';
+  // private apiUrl = 'http://localhost:3000/comments';
 
   constructor(private http: HttpClient) {}
 
