@@ -1,0 +1,95 @@
+<div class="w-full overflow-x-auto bg-neutral-700 rounded-lg shadow p-5">
+    <table class="table-auto w-full text-sm bg-neutral-800">
+        <thead>
+            <tr class="text-left bg-neutral-900 border-b">
+                <th class="px-4 py-3 font-bold text-neutral-300">Nombre</th>
+                <th class="px-4 py-3 font-bold text-neutral-300 max-sm:hidden">@Usuario</th>
+                <th class="px-4 py-3 font-bold text-neutral-300 max-md:hidden">Email</th>
+                <th class="px-4 py-3 font-bold text-neutral-300">Rol</th>
+                <th class="px-4 py-3 font-bold text-neutral-300 max-sm:hidden">Estado</th>
+                <th class="px-4 py-3 font-bold text-neutral-300 max-md:hidden">Creado</th>
+                <th class="px-4 py-3 font-bold text-neutral-300 text-center">Opciones</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-neutral-700">
+            @for (user of users | async; track $index) {
+                <tr class="hover:bg-neutral-700 transition-colors">
+                    <td class="px-4 py-3 max-sm:hidden">
+                        <div class="flex items-center gap-3">
+                            <img
+                                [src]="user.avatar"
+                                alt="avatar"
+                                class="size-10 max-sm:size-6 rounded-full object-cover"
+                            >
+                            <p class="text-neutral-300 font-medium text-xs sm:text-sm">
+                                {{user.firstName}} {{user.lastName}}
+                            </p>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-neutral-300 font-bold text-xs sm:text-sm">
+                        <div class="flex items-center gap-3">
+                            <img
+                                [src]="user.avatar"
+                                alt="avatar"
+                                class="size-10 max-sm:size-6 rounded-full object-cover sm:hidden"
+                            >
+                            <p class="text-neutral-300 font-medium text-xs sm:text-sm">
+                                @{{user.username}}
+                            </p>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-neutral-300 text-xs sm:text-sm max-md:hidden">
+                        {{user.email}}
+                    </td>
+                    <td class="px-4 py-3 text-neutral-300 text-xs sm:text-sm">
+                        <span
+                            class="font-bold px-2 py-1 rounded-2xl"
+                            [class.bg-blue-200]="user.rol != 'admin'"
+                            [class.text-blue-500]="user.rol != 'admin'"
+                            [class.bg-red-300]="user.rol === 'admin'"
+                            [class.text-red-500]="user.rol === 'admin'"
+                        >
+                            {{user.rol | uppercase}}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 max-sm:hidden">
+                        <span
+                            class="px-2 py-1 rounded-full font-semibold text-xs sm:text-sm"
+                            [class.bg-green-100]="!user.isDisabled"
+                            [class.text-green-700]="!user.isDisabled"
+                            [class.bg-red-100]="user.isDisabled"
+                            [class.text-red-700]="user.isDisabled"
+                        >
+                            {{ user.isDisabled ? 'Suspendido' : 'Habilitado' }}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-neutral-300 text-xs sm:text-sm max-md:hidden">
+                        {{ user.createDate | date }}
+                    </td>
+                    <td class="text-center px-4 py-3 whitespace-nowrap">
+                        <button 
+                            (click)="enableOrDisableUser(user, true)" 
+                            [disabled]="user.isDisabled"
+                            class="disabled:bg-neutral-500 disabled:text-neutral-300
+                            mx-1 bg-red-200 px-1.5 pt-1 rounded-full cursor-pointer
+                            hover:scale-110 transition-all hover:bg-red-400 
+                            text-red-500 hover:text-red-200"
+                        >
+                            <ng-icon name="faSolidCircleXmark" class="size-4!" />
+                        </button>
+                        <button 
+                            (click)="enableOrDisableUser(user, false)" 
+                            [disabled]="!user.isDisabled"
+                            class="disabled:bg-neutral-500 disabled:text-neutral-300
+                            mx-1 bg-green-200 px-1.5 pt-1 rounded-full cursor-pointer
+                            hover:scale-110 transition-all hover:bg-green-400 
+                            text-green-500 hover:text-green-200"
+                        >
+                            <ng-icon name="faSolidCircleCheck" class="size-4!" />
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
