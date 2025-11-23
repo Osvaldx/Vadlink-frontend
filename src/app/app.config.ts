@@ -30,7 +30,9 @@ import {
   faSolidHeart,
   faSolidShareFromSquare,
   faSolidCommentDots,
-  faSolidTrash
+  faSolidTrash,
+  faSolidLaptopCode,
+  faSolidChartLine
  } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
@@ -75,7 +77,9 @@ export const appConfig: ApplicationConfig = {
       faSolidCommentDots,
       faSolidShareFromSquare,
       faSolidHeart,
-      faSolidTrash
+      faSolidTrash,
+      faSolidLaptopCode,
+      faSolidChartLine
     })
   ]
 };
