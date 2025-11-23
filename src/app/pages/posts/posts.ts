@@ -17,6 +17,7 @@ import { PostForm } from "../../components/post-form/post-form";
 export class Posts implements OnInit{
 
   public posts$!: Observable<PostFormat[]>;
+  public postsLen: number = 0;
   public user!: UserData;
   public limit = 5;
   public offset = 0;
@@ -34,6 +35,9 @@ export class Posts implements OnInit{
 
     this.loadPosts(false);
     this.posts$ = this.postsService.getPostsObservable();
+    this.postsService.getPostsObservable().subscribe(lista => {
+      this.postsLen = lista.length;
+    })
     
     this.postsService.getTotalObservable().subscribe(total => {
       this.totalPosts = total;
@@ -55,7 +59,7 @@ export class Posts implements OnInit{
   }
 
   public loadMoreDisabled() {
-    return (this.totalPosts === this.loadedPosts);
+    return (this.totalPosts === this.postsLen);
   }
 
   public FilterPosts(e: Event) {
