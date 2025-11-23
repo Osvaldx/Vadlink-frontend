@@ -6,6 +6,7 @@ import { SignInCredentials } from '../interfaces/sign-in-credentials';
 import { MessageManager } from './message-manager';
 import { RefreshData } from '../interfaces/refresh-data';
 import { BehaviorSubject } from 'rxjs';
+import { AdminService } from './admin-service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class Auth {
 
   private apiUrl = 'https://vadlink-backend.vercel.app';
   // private apiUrl = 'http://localhost:3000';
+
   private refreshTimer: NodeJS.Timeout | null = null;
   private logoutTimer: NodeJS.Timeout | null = null;
   
@@ -28,10 +30,12 @@ export class Auth {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly router: Router,
-    private readonly msgManager: MessageManager
+    private readonly msgManager: MessageManager,
+    private readonly adminService: AdminService
   ) { this.resetModalSubject() }
 
   public signIn(credentials: SignInCredentials) {
+    this.loadingSubject.next(true);
     this.httpClient.post<UserData>(this.apiUrl + '/auth/login', credentials).subscribe({
       next: (user) => {
         this.msgManager.add('success', 'Inicio de sesión exitoso!', 3);
@@ -39,46 +43,55 @@ export class Auth {
         console.log(this.currentUser());
         this.startTokenTimer(user.exp);
         this.router.navigateByUrl('/');
+        this.loadingSubject.next(false);
       },
       error: (err: HttpErrorResponse) => {
         this.msgManager.add('error', err.error.message, 3);
         console.log(err);
         this.currentUser.set(null);
+        this.loadingSubject.next(false);
       }
     });
 
   }
 
-  public signUp(formData: FormData) {
+  public signUp(formData: FormData, isAdmin: boolean) {
+    this.loadingSubject.next(true);
     this.httpClient.post<UserData>(this.apiUrl + '/auth/register', formData).subscribe({
       next: (user) => {
         this.msgManager.add('success', 'Registro exitoso!', 3);
-        this.currentUser.set(user as UserData);
-        console.log(this.currentUser());
-        this.startTokenTimer(user.exp);
-        this.router.navigate(['/']);
+        if(!isAdmin) {
+          this.router.navigateByUrl('/auth/login');
+        } else {
+          console.log("por agregar el usuario")
+          this.adminService.addNewUserLocalList(user);
+        }
+        this.loadingSubject.next(false);
       },
       error: (err: HttpErrorResponse) => {
         this.msgManager.add('error', err.error.message, 3);
         console.log(err);
-        this.currentUser.set(null);
+        this.loadingSubject.next(false);
       }
     });
   }
 
   public signOut() {
+    this.loadingSubject.next(true);
     this.httpClient.post(this.apiUrl + '/auth/logout', {}).subscribe({
       next: (res) => {
         this.msgManager.add('success', 'Cierre de sesión exitoso!', 3);
         console.log(res);
         this.currentUser.set(null);
         this.router.navigate(['/auth/login']);
+        this.loadingSubject.next(false);
       },
       error: (err: HttpErrorResponse) => {
         this.msgManager.add('error', err.error.message, 3);
         console.log(err);
         this.currentUser.set(null);
         this.router.navigate(['/auth/login']);
+        this.loadingSubject.next(false);
       }
     })
   }
