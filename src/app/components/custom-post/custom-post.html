@@ -8,7 +8,7 @@
             </div>
             <div class="ml-auto ">
                 <span class="text-neutral-500 text-sm max-sm:text-[10px]">{{post.created_at | date}}</span>
-                @if (this.user.username === post.user_id.username) {
+                @if (this.user.username === post.user_id.username || this.user.rol === 'admin') {
                     <div class="flex justify-center items-center">
                         <div class="bg-red-300 rounded-2xl px-2 py-1 flex cursor-pointer" (click)="showModal()">
                             <ng-icon name="faSolidTrash" class="size-5! text-red-500! max-sm:size-4!"></ng-icon>
