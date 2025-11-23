@@ -14,5 +14,6 @@ export interface UserData {
     password: string
     banner: string
     banner_id: string,
+    isDisabled: boolean,
     exp: number
 }
