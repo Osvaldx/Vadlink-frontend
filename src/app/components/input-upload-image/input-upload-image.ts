@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
 import { ValidateErrorsInput } from "../../directives/validate-errors-input";
 import { Register } from '../../pages/auth/register/register';
+import { FormRegister } from '../form-register/form-register';
 
 @Component({
   selector: 'app-input-upload-image',
@@ -17,7 +18,7 @@ export class InputUploadImage implements OnDestroy{
 
   @Input() registerForm!: FormGroup;
 
-  constructor(private register: Register) {
+  constructor(private register: FormRegister) {
     effect(() => {
       if(this.register.resetImage()) this.removeAvatar();
     })
