@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { InfovalorPipe } from '../../pipes/infovalor-pipe';
 
 @Component({
   selector: 'app-info-profile',
-  imports: [DatePipe],
+  imports: [InfovalorPipe],
   templateUrl: './info-profile.html',
   styleUrl: './info-profile.css',
 })
