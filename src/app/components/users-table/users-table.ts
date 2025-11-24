@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin-service';
 import { UserData } from '../../interfaces/user-data';
-import { AsyncPipe, DatePipe, UpperCasePipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { Observable } from 'rxjs';
+import { DatePostsPipe } from '../../pipes/date-posts-pipe';
+import { TagRolPipe } from '../../pipes/tag-rol-pipe';
 
 @Component({
   selector: 'app-users-table',
-  imports: [AsyncPipe, DatePipe, UpperCasePipe, NgIcon],
+  imports: [AsyncPipe, NgClass, DatePostsPipe, TagRolPipe, NgIcon],
   templateUrl: './users-table.html',
   styleUrl: './users-table.css',
 })

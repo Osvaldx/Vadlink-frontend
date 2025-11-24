@@ -13,6 +13,7 @@
         </thead>
         <tbody class="divide-y divide-neutral-700">
             @for (user of users | async; track $index) {
+                @let rolTag = user.rol | tagRol;
                 <tr class="hover:bg-neutral-700 transition-colors">
                     <td class="px-4 py-3 max-sm:hidden">
                         <div class="flex items-center gap-3">
@@ -44,12 +45,9 @@
                     <td class="px-4 py-3 text-neutral-300 text-xs sm:text-sm">
                         <span
                             class="font-bold px-2 py-1 rounded-2xl"
-                            [class.bg-blue-200]="user.rol != 'admin'"
-                            [class.text-blue-500]="user.rol != 'admin'"
-                            [class.bg-red-300]="user.rol === 'admin'"
-                            [class.text-red-500]="user.rol === 'admin'"
+                            [ngClass]="rolTag.classes"
                         >
-                            {{user.rol | uppercase}}
+                            {{ rolTag.label }}
                         </span>
                     </td>
                     <td class="px-4 py-3 max-sm:hidden">
@@ -64,7 +62,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-3 text-neutral-300 text-xs sm:text-sm max-md:hidden">
-                        {{ user.createDate | date }}
+                        {{ user.createDate | datePosts }}
                     </td>
                     <td class="text-center px-4 py-3 whitespace-nowrap">
                         <button 
