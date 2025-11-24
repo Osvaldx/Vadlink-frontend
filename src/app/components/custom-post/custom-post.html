@@ -7,7 +7,7 @@
                 <p class="text-neutral-400 text-xs leading-none">@{{post.user_id.username}}</p>
             </div>
             <div class="ml-auto ">
-                <span class="text-neutral-500 text-sm max-sm:text-[10px]">{{post.created_at | date}}</span>
+                <span class="text-neutral-500 text-sm max-sm:text-[10px]">{{post.created_at | datePosts}}</span>
                 @if (this.user.username === post.user_id.username || this.user.rol === 'admin') {
                     <div class="flex justify-center items-center">
                         <div class="bg-red-300 rounded-2xl px-2 py-1 flex cursor-pointer" (click)="showModal()">

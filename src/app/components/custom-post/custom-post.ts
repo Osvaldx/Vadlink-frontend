@@ -4,12 +4,12 @@ import { PostFormat } from '../../interfaces/post-format';
 import { UserData } from '../../interfaces/user-data';
 import { PostsService } from '../../services/posts-service';
 import { Auth } from '../../services/auth';
-import { DatePipe } from '@angular/common';
 import { CommentsComponent } from "../comments/comments";
+import { DatePostsPipe } from '../../pipes/date-posts-pipe';
 
 @Component({
   selector: 'app-custom-post',
-  imports: [NgIcon, DatePipe, CommentsComponent],
+  imports: [NgIcon, DatePostsPipe, CommentsComponent],
   templateUrl: './custom-post.html',
   styleUrl: './custom-post.css',
 })
