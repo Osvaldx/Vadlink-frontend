@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideIcons } from '@ng-icons/core';
@@ -36,6 +36,7 @@ import {
  } from '@ng-icons/font-awesome/solid';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './interceptors/header-interceptor';
+import { provideServiceWorker } from '@angular/service-worker';
 // import { handledErrorsInterceptor } from './interceptors/handled-errors-interceptor';
 // import { Auth } from './services/auth';
 
@@ -80,6 +81,9 @@ export const appConfig: ApplicationConfig = {
       faSolidTrash,
       faSolidLaptopCode,
       faSolidChartLine
-    })
+    }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })
   ]
 };
