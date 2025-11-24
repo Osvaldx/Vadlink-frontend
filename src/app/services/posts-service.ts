@@ -11,8 +11,8 @@ import { GetPostsFormat } from '../interfaces/get-posts-format';
 })
 export class PostsService {
 
-  private postURL = 'https://vadlink-backend.vercel.app/posts';
-  // private postURL = 'http://localhost:3000/posts';
+  private apiUrl = 'https://vadlink-backend.vercel.app/posts';
+  // private apiUrl = 'http://localhost:3000/posts';
 
   private postsSubject = new BehaviorSubject<PostFormat[]>([]);
   private totalSubject = new BehaviorSubject<number>(0);
@@ -20,7 +20,7 @@ export class PostsService {
   constructor(private http: HttpClient, private msgManager: MessageManager) { }
 
   public findAllPosts(params: FindAllParams): Observable<GetPostsFormat> {
-    let query = this.postURL + '?';
+    let query = this.apiUrl + '?';
 
     if(params.username) {
       query += `&username=${params.username}`;
@@ -45,7 +45,7 @@ export class PostsService {
   }
 
   public addLikePost(post_id: string) {
-    this.http.post(this.postURL + `/like/${post_id}`, {}).subscribe({
+    this.http.post(this.apiUrl + `/like/${post_id}`, {}).subscribe({
       next: () => {
         this.msgManager.add('success', 'Se registro el like en la publicación', 2);
         console.log("q");
@@ -58,7 +58,7 @@ export class PostsService {
   }
 
   public removeLikePost(post_id: string) {
-    this.http.post(this.postURL + `/removeLike/${post_id}`, {}).subscribe({
+    this.http.post(this.apiUrl + `/removeLike/${post_id}`, {}).subscribe({
       next: () => {
         this.msgManager.add('success', 'Se saco el like de la publicación', 2);
       },
@@ -69,7 +69,7 @@ export class PostsService {
   }
 
   public deletePost(post_id: string) {
-    this.http.delete(this.postURL + `/${post_id}`).subscribe({
+    this.http.delete(this.apiUrl + `/${post_id}`).subscribe({
       next: () => {
         this.msgManager.add('success', 'Publicación eliminada!', 2);
       },
@@ -104,7 +104,7 @@ export class PostsService {
   }
 
   public createPost(body: FormData) {
-    this.http.post<PostFormat>(this.postURL, body).subscribe({
+    this.http.post<PostFormat>(this.apiUrl, body).subscribe({
       next: (post) => {
         console.log(post);
         this.createPostLocal(post);
