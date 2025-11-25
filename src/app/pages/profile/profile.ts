@@ -26,7 +26,6 @@ export class Profile implements OnInit{
   constructor(private readonly authService: Auth, private readonly postsService: PostsService) { }
 
   ngOnInit(): void {
-    this.authService.setLoading(true);
     if(this.authService.currentUser()) {
       this.data = this.authService.currentUser();
       this.create_at = new Date(this.data?.createDate!);
@@ -35,10 +34,6 @@ export class Profile implements OnInit{
     
     this.getPosts();
     this.posts$ = this.postsService.getPostsObservable();
-
-    setTimeout(() => {
-      this.authService.setLoading(false);
-    }, 1000);
   }
 
   public getPosts() {

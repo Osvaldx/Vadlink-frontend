@@ -28,7 +28,6 @@ export class Posts implements OnInit{
   constructor(private readonly postsService: PostsService, private readonly authService: Auth) { }
 
   ngOnInit(): void {
-    this.authService.setLoading(true);
     const userOrNull = this.authService.currentUser();
     if(userOrNull) {
       this.user = userOrNull;
@@ -43,10 +42,6 @@ export class Posts implements OnInit{
     this.postsService.getTotalObservable().subscribe(total => {
       this.totalPosts = total;
     })
-
-    setTimeout(() => {
-      this.authService.setLoading(false);
-    }, 1000);
   }
 
   private loadPosts(append: boolean) {
