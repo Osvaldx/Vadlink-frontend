@@ -6,7 +6,7 @@
         <p class="text-xl font-bold text-black">Quedan 5 minutos de sesion</p>
             <p class="text-sm text-neutral-700">¿Desea extender su sesión?</p>
         <div class="flex gap-5">
-            <button (click)="signOut()" class="text-neutral-300 font-semibold hover:scale-110 transition-all bg-red-500 text-md px-5 py-1 cursor-pointer">No</button>
+            <button (click)="notRefresh()" class="text-neutral-300 font-semibold hover:scale-110 transition-all bg-red-500 text-md px-5 py-1 cursor-pointer">No</button>
             <button (click)="refreshToken()" class="text-neutral-300 font-semibold hover:scale-110 transition-all bg-green-600 text-md px-5 py-1 cursor-pointer">Si</button>
         </div>
     </div>

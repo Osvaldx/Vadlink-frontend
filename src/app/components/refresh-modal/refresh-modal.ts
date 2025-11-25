@@ -21,8 +21,8 @@ export class RefreshModal implements OnInit{
     })
   }
 
-  public signOut() {
-    this.authService.signOut();
+  public notRefresh() {
+    // this.authService.signOut();
     this.authService.resetModalSubject();
   }
   
