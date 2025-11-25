@@ -46,7 +46,7 @@ export class Posts implements OnInit{
 
     setTimeout(() => {
       this.authService.setLoading(false);
-    }, 500);
+    }, 1000);
   }
 
   private loadPosts(append: boolean) {

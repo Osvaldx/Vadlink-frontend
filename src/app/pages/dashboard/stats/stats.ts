@@ -72,7 +72,7 @@ export class Stats implements OnInit {
     
     setTimeout(() => {
       this.authService.setLoading(false);
-    }, 500);
+    }, 1000);
   }
 
   private buildRange(days: number) {

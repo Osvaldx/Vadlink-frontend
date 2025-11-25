@@ -38,7 +38,7 @@ export class Profile implements OnInit{
 
     setTimeout(() => {
       this.authService.setLoading(false);
-    }, 500);
+    }, 1000);
   }
 
   public getPosts() {
