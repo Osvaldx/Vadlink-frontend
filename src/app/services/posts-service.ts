@@ -6,6 +6,7 @@ import { MessageManager } from './message-manager';
 import { FindAllParams } from '../interfaces/find-all-params';
 import { GetPostsFormat } from '../interfaces/get-posts-format';
 import { environment } from '../../environments/environment';
+import { Auth } from './auth';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class PostsService {
   private postsSubject = new BehaviorSubject<PostFormat[]>([]);
   private totalSubject = new BehaviorSubject<number>(0);
 
-  constructor(private http: HttpClient, private msgManager: MessageManager) { }
+  constructor(private readonly http: HttpClient, private readonly msgManager: MessageManager, private readonly authService: Auth) { }
 
   public findAllPosts(params: FindAllParams): Observable<GetPostsFormat> {
     let query = this.apiUrl + '?';
@@ -81,6 +82,7 @@ export class PostsService {
   }
 
   public getPostsLocal(params: FindAllParams, append: boolean) {
+    this.authService.setLoading(true);
     this.findAllPosts(params).subscribe(response => {
       if (append) {
         const updated = [...this.postsSubject.value, ...response.posts];
@@ -90,6 +92,7 @@ export class PostsService {
         this.postsSubject.next(response.posts);
         this.totalSubject.next(response.total);
       }
+      this.authService.setLoading(false);
     });
   }
 
