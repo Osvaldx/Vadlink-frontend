@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../../services/stats-service';
 import { FormsModule } from '@angular/forms';
+import { Auth } from '../../../services/auth';
 
 @Component({
   selector: 'app-stats',
@@ -26,7 +27,7 @@ export class Stats implements OnInit {
   dateFrom: string = '';
   dateTo: string = '';
 
-  constructor(private statsService: StatsService) {}
+  constructor(private statsService: StatsService, private readonly authService: Auth) {}
 
   ngOnInit() {
     Chart.register(...registerables);
@@ -48,6 +49,7 @@ export class Stats implements OnInit {
 
   // carga central
   private reloadCharts() {
+    this.authService.setLoading(true);
     let from = '';
     let to = '';
 
@@ -67,6 +69,10 @@ export class Stats implements OnInit {
     this.loadPostsTimelineChart(from, to);
     this.loadCommentsTimelineChart(from, to);
     this.loadPostsLikesChart(from, to);
+    
+    setTimeout(() => {
+      this.authService.setLoading(false);
+    }, 500);
   }
 
   private buildRange(days: number) {
