@@ -2,19 +2,43 @@
     <div class="mt-16 sm:mt-20 w-full max-w-7xl">
         <h1 class="text-white text-xl sm:text-2xl mb-4 sm:mb-6 text-center font-bold">Estadísticas - Red Vadlink</h1>
         <div class="mb-4 sm:mb-6 md:mb-8 text-center">
-            <label class="text-white text-sm sm:text-base mr-2 sm:mr-3 block sm:inline mb-2 sm:mb-0">Rango:</label>
-            <select (change)="onRangeChange($event)" class="px-3 py-2 bg-neutral-700 text-white rounded text-sm sm:text-base w-full sm:w-auto max-w-xs sm:max-w-none">
-                <option value="2">Últimos 2 días</option>
-                <option value="7">Últimos 7 días</option>
-                <option value="15">Últimos 15 días</option>
-                <option value="30" selected>Últimos 30 días</option>
-                <option value="60">Últimos 60 días</option>
-            </select>
+            <div class="mb-4 sm:mb-6 md:mb-8 text-center flex flex-col sm:flex-row justify-center items-center gap-3">
+                <!-- Select de rangos rápidos -->
+                <div>
+                    <label class="text-white text-sm sm:text-base mr-2 block sm:inline">Rango:</label>
+                    <select (change)="onRangeChange($event)"
+                            class="px-3 py-2 bg-neutral-700 text-white rounded text-sm sm:text-base">
+                        <option value="2">Últimos 2 días</option>
+                        <option value="7">Últimos 7 días</option>
+                        <option value="15">Últimos 15 días</option>
+                        <option value="30" selected>Últimos 30 días</option>
+                        <option value="60">Últimos 60 días</option>
+                    </select>
+                </div>
+            
+                <!-- Fecha "Desde" -->
+                <div>
+                    <label class="text-white text-sm sm:text-base mr-2">Desde:</label>
+                    <input type="date"
+                           (change)="onDateChange()"
+                           [(ngModel)]="dateFrom"
+                           class="px-3 py-2 bg-neutral-700 text-white rounded text-sm sm:text-base" />
+                </div>
+            
+                <!-- Fecha "Hasta" -->
+                <div>
+                    <label class="text-white text-sm sm:text-base mr-2">Hasta:</label>
+                    <input type="date"
+                           (change)="onDateChange()"
+                           [(ngModel)]="dateTo"
+                           class="px-3 py-2 bg-neutral-700 text-white rounded text-sm sm:text-base" />
+                </div>
+            </div>            
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pb-4 sm:pb-5">
             <!-- AUTOR MÁS ACTIVOS -->
             <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Autores más activos</h2>
+                <h2 class="text-white text-xs sm:text-sm mb-2">Cantidad de publicaciones por Usuario</h2>
                 <div class="flex-1 flex items-center justify-center min-h-[200px] sm:min-h-[224px]">
                     <canvas id="authorsChart" class="w-full max-w-full h-full"></canvas>
                 </div>
@@ -30,7 +54,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <!-- COMENTARIOS TOTALES -->
             <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios Totales</h2>
+                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios Totales en toda la WEB</h2>
                 <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
                     <canvas id="commentsTotalChart" class="w-full max-w-full h-full"></canvas>
                 </div>
@@ -46,7 +70,7 @@
     
             <!-- PUBLICACIONES EN EL TIEMPO -->
             <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Publicaciones en el Tiempo</h2>
+                <h2 class="text-white text-xs sm:text-sm mb-2">Publicaciones realizados en el Tiempo</h2>
                 <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
                     <canvas id="postsTimelineChart" class="w-full max-w-full h-full"></canvas>
                 </div>
@@ -54,7 +78,7 @@
     
             <!-- COMENTARIOS EN EL TIEMPO -->
             <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios en el Tiempo</h2>
+                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios realizados en el Tiempo</h2>
                 <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
                     <canvas id="commentsTimelineChart" class="w-full max-w-full h-full"></canvas>
                 </div>

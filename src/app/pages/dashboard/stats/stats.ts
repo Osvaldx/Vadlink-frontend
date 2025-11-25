@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../../services/stats-service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-stats',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './stats.html',
   styleUrl: './stats.css',
 })
@@ -18,7 +19,12 @@ export class Stats implements OnInit {
   private commentsTimelineChart?: Chart;
   private postsLikesChart?: Chart;
 
+  // rango rápido
   private daysRange = 30;
+
+  // fechas personalizadas
+  dateFrom: string = '';
+  dateTo: string = '';
 
   constructor(private statsService: StatsService) {}
 
@@ -27,13 +33,32 @@ export class Stats implements OnInit {
     this.reloadCharts();
   }
 
+  // cuando cambia el rango rápido
   onRangeChange(event: any) {
+    this.dateFrom = '';
+    this.dateTo = '';
     this.daysRange = Number(event.target.value);
     this.reloadCharts();
   }
 
+  // cuando cambian las fechas manuales
+  onDateChange() {
+    this.reloadCharts();
+  }
+
+  // carga central
   private reloadCharts() {
-    const { from, to } = this.buildRange(this.daysRange);
+    let from = '';
+    let to = '';
+
+    if (this.dateFrom && this.dateTo) {
+      from = this.dateFrom;
+      to = this.dateTo;
+    } else {
+      const range = this.buildRange(this.daysRange);
+      from = range.from;
+      to = range.to;
+    }
 
     this.loadAuthorsChart(from, to);
     this.loadCommentsTotalChart(from, to);
@@ -59,10 +84,9 @@ export class Stats implements OnInit {
     if (chart) chart.destroy();
   }
 
-  // AUTORES MÁS ACTIVOS (Posts por usuario — Doughnut)
+  // AUTORES MÁS ACTIVOS
   private loadAuthorsChart(from: string, to: string) {
     this.statsService.getUsersPostsStats(from, to).subscribe(res => {
-
       this.destroy(this.authorsChart);
 
       this.authorsChart = new Chart('authorsChart', {
@@ -77,17 +101,14 @@ export class Stats implements OnInit {
             ]
           }]
         },
-        options: {
-          cutout: '60%'
-        }
+        options: { cutout: '60%' }
       });
     });
   }
 
-  // COMENTARIOS TOTALES (Mini bar)
+  // COMENTARIOS TOTALES
   private loadCommentsTotalChart(from: string, to: string) {
     this.statsService.getCommentsStats(from, to).subscribe(res => {
-
       this.destroy(this.commentsTotalChart);
 
       this.commentsTotalChart = new Chart('commentsTotalChart', {
@@ -100,17 +121,14 @@ export class Stats implements OnInit {
             backgroundColor: '#4ade80'
           }]
         },
-        options: {
-          responsive: false
-        }
+        options: { responsive: false }
       });
     });
   }
 
-  // COMENTARIOS POR PUBLICACIÓN (Bar horizontal)
+  // COMENTARIOS POR PUBLICACIÓN
   private loadCommentsPerPostChart(from: string, to: string) {
     this.statsService.getPostsCommentsStats(from, to).subscribe(res => {
-
       this.destroy(this.commentsPerPostChart);
 
       this.commentsPerPostChart = new Chart('commentsPerPostChart', {
@@ -128,14 +146,12 @@ export class Stats implements OnInit {
           responsive: false
         }
       });
-
     });
   }
 
-  // POSTS EN EL TIEMPO (Line Chart)
+  // POSTS EN EL TIEMPO
   private loadPostsTimelineChart(from: string, to: string) {
     this.statsService.getPostsTimeline(from, to).subscribe(res => {
-
       this.destroy(this.postsTimelineChart);
 
       this.postsTimelineChart = new Chart('postsTimelineChart', {
@@ -154,14 +170,12 @@ export class Stats implements OnInit {
         },
         options: { responsive: false }
       });
-
     });
   }
 
-  // COMENTARIOS EN EL TIEMPO (Line Chart)
+  // COMENTARIOS EN EL TIEMPO
   private loadCommentsTimelineChart(from: string, to: string) {
     this.statsService.getCommentsTimeline(from, to).subscribe(res => {
-
       this.destroy(this.commentsTimelineChart);
 
       this.commentsTimelineChart = new Chart('commentsTimelineChart', {
@@ -180,14 +194,12 @@ export class Stats implements OnInit {
         },
         options: { responsive: false }
       });
-
     });
   }
 
-  // POSTS CON MÁS LIKES (Radar Chart)
+  // POSTS CON MÁS LIKES
   private loadPostsLikesChart(from: string, to: string) {
     this.statsService.getPostsLikes(from, to).subscribe(res => {
-
       this.destroy(this.postsLikesChart);
 
       this.postsLikesChart = new Chart('postsLikesChart', {
@@ -202,9 +214,8 @@ export class Stats implements OnInit {
             pointRadius: 3
           }]
         },
-        options: { }
+        options: {}
       });
-
     });
   }
 }
