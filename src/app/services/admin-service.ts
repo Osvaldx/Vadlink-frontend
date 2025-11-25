@@ -3,6 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { UserData } from '../interfaces/user-data';
 import { BehaviorSubject } from 'rxjs';
 import { MessageManager } from './message-manager';
+import { environment } from '../../environments/environment';
 
 type resUserStatus = {
   statusCode: number
@@ -14,8 +15,7 @@ type resUserStatus = {
 })
 export class AdminService {
 
-  private apiUrl = 'https://vadlink-backend.vercel.app/users';
-  // private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = `${environment.apiUrl}/users`;
 
   private usersSubject = new BehaviorSubject<UserData[]>([]);
 

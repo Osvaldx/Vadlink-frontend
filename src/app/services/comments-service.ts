@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { CommentsParams } from '../interfaces/comments-params';
 import { FindCommentsFormat } from '../interfaces/find-comments-format';
 import { CommentFormat } from '../interfaces/comment-format';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentsService {
 
-  private apiUrl = 'https://vadlink-backend.vercel.app/comments';
-  // private apiUrl = 'http://localhost:3000/comments';
+  private apiUrl = `${environment.apiUrl}/comments`;
 
   constructor(private http: HttpClient) {}
 

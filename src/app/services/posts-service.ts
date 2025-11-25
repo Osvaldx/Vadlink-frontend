@@ -5,14 +5,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { MessageManager } from './message-manager';
 import { FindAllParams } from '../interfaces/find-all-params';
 import { GetPostsFormat } from '../interfaces/get-posts-format';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
 
-  private apiUrl = 'https://vadlink-backend.vercel.app/posts';
-  // private apiUrl = 'http://localhost:3000/posts';
+  private apiUrl = `${environment.apiUrl}/posts`;
 
   private postsSubject = new BehaviorSubject<PostFormat[]>([]);
   private totalSubject = new BehaviorSubject<number>(0);

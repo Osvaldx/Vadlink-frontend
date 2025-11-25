@@ -7,14 +7,14 @@ import { MessageManager } from './message-manager';
 import { RefreshData } from '../interfaces/refresh-data';
 import { BehaviorSubject } from 'rxjs';
 import { AdminService } from './admin-service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
 
-  private apiUrl = 'https://vadlink-backend.vercel.app';
-  // private apiUrl = 'http://localhost:3000';
+  private apiUrl = environment.apiUrl;
 
   private refreshTimer: NodeJS.Timeout | null = null;
   private logoutTimer: NodeJS.Timeout | null = null;

@@ -6,14 +6,14 @@ import { StatsPostsCommentsResponse } from '../interfaces/stats-posts-comments-r
 import { StatsPostsTimelineResponse } from '../interfaces/stats-posts-timeline-response';
 import { StatsCommentsTimelineResponse } from '../interfaces/stats-comments-timeline-response';
 import { StatsPostsLikesResponse } from '../interfaces/stats-posts-likes-response';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatsService {
 
-  private apiUrl = 'https://vadlink-backend.vercel.app/stats';
-  // private apiUrl = 'http://localhost:3000/stats';
+  private apiUrl = `${environment.apiUrl}/stats`;
 
   constructor(private readonly http: HttpClient) {}
 
