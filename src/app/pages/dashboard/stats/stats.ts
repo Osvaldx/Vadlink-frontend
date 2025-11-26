@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StatsService } from '../../../services/stats-service';
 import { FormsModule } from '@angular/forms';
-import { Auth } from '../../../services/auth';
+import { ChartsTemplate } from "../../../components/charts-template/charts-template";
 
 @Component({
   selector: 'app-stats',
-  imports: [FormsModule],
+  imports: [FormsModule, ChartsTemplate],
   templateUrl: './stats.html',
   styleUrl: './stats.css',
 })
 export class Stats implements OnInit {
 
-  private authorsChart?: Chart;
+  private usersChart?: Chart;
   private commentsTotalChart?: Chart;
   private commentsPerPostChart?: Chart;
 
   private postsTimelineChart?: Chart;
   private commentsTimelineChart?: Chart;
   private postsLikesChart?: Chart;
+
+  public usersChartLoading = signal<boolean>(true);
+  public commentsTotalChartLoading = signal<boolean>(true);
+  public commentsPerPostChartLoading = signal<boolean>(true);
+
+  public postsTimelineChartLoading = signal<boolean>(true);
+  public commentsTimelineChartLoading = signal<boolean>(true);
+  public postsLikesChartLoading = signal<boolean>(true);
 
   // rango rápido
   private daysRange = 30;
@@ -27,7 +35,7 @@ export class Stats implements OnInit {
   dateFrom: string = '';
   dateTo: string = '';
 
-  constructor(private statsService: StatsService, private readonly authService: Auth) {}
+  constructor(private statsService: StatsService) {}
 
   ngOnInit() {
     Chart.register(...registerables);
@@ -49,7 +57,6 @@ export class Stats implements OnInit {
 
   // carga central
   private reloadCharts() {
-    this.authService.setLoading(true);
     let from = '';
     let to = '';
 
@@ -62,17 +69,13 @@ export class Stats implements OnInit {
       to = range.to;
     }
 
-    this.loadAuthorsChart(from, to);
+    this.loadUsersChart(from, to);
     this.loadCommentsTotalChart(from, to);
     this.loadCommentsPerPostChart(from, to);
 
     this.loadPostsTimelineChart(from, to);
     this.loadCommentsTimelineChart(from, to);
     this.loadPostsLikesChart(from, to);
-    
-    setTimeout(() => {
-      this.authService.setLoading(false);
-    }, 1000);
   }
 
   private buildRange(days: number) {
@@ -90,12 +93,12 @@ export class Stats implements OnInit {
     if (chart) chart.destroy();
   }
 
-  // AUTORES MÁS ACTIVOS
-  private loadAuthorsChart(from: string, to: string) {
+  // USUARIOS MÁS ACTIVOS
+  private loadUsersChart(from: string, to: string) {
     this.statsService.getUsersPostsStats(from, to).subscribe(res => {
-      this.destroy(this.authorsChart);
+      this.destroy(this.usersChart);
 
-      this.authorsChart = new Chart('authorsChart', {
+      this.usersChart = new Chart('usersChart', {
         type: 'doughnut',
         data: {
           labels: res.data.map(u => u.username),
@@ -109,6 +112,7 @@ export class Stats implements OnInit {
         },
         options: { cutout: '60%' }
       });
+      this.usersChartLoading.set(false);
     });
   }
 
@@ -129,6 +133,7 @@ export class Stats implements OnInit {
         },
         options: { responsive: false }
       });
+      this.commentsTotalChartLoading.set(false);
     });
   }
 
@@ -152,6 +157,7 @@ export class Stats implements OnInit {
           responsive: false
         }
       });
+      this.commentsPerPostChartLoading.set(false);
     });
   }
 
@@ -176,6 +182,7 @@ export class Stats implements OnInit {
         },
         options: { responsive: false }
       });
+      this.postsTimelineChartLoading.set(false);
     });
   }
 
@@ -200,6 +207,7 @@ export class Stats implements OnInit {
         },
         options: { responsive: false }
       });
+      this.commentsTimelineChartLoading.set(false);
     });
   }
 
@@ -222,6 +230,7 @@ export class Stats implements OnInit {
         },
         options: {}
       });
+      this.postsLikesChartLoading.set(false);
     });
   }
 }

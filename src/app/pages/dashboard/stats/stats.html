@@ -36,53 +36,47 @@
             </div>            
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pb-4 sm:pb-5">
-            <!-- AUTOR MÁS ACTIVOS -->
-            <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Cantidad de publicaciones por Usuario</h2>
-                <div class="flex-1 flex items-center justify-center min-h-[200px] sm:min-h-[224px]">
-                    <canvas id="authorsChart" class="w-full max-w-full h-full"></canvas>
-                </div>
-            </div>
+            <!-- USUARIOS MÁS ACTIVOS -->
+            <app-charts-template
+            titleChart="Cantidad de publicaciones por Usuario"
+            canvasIdChart="usersChart"
+            [signalDisableOrEnable]="this.usersChartLoading"
+            ></app-charts-template>
             <!-- POSTS MÁS LIKED -->
-            <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Publicaciones con más Likes</h2>
-                <div class="flex-1 flex items-center justify-center min-h-[200px] sm:min-h-[224px]">
-                    <canvas id="postsLikesChart" class="w-full max-w-full h-full"></canvas>
-                </div>
-            </div>
+            <app-charts-template
+            titleChart="Publicaciones con más Likes"
+            canvasIdChart="postsLikesChart"
+            [signalDisableOrEnable]="this.postsLikesChartLoading"
+            ></app-charts-template>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <!-- COMENTARIOS TOTALES -->
-            <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios Totales en toda la WEB</h2>
-                <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
-                    <canvas id="commentsTotalChart" class="w-full max-w-full h-full"></canvas>
-                </div>
-            </div>
+            <app-charts-template
+            titleChart="Comentarios Totales en toda la WEB"
+            canvasIdChart="commentsTotalChart"
+            [signalDisableOrEnable]="this.commentsTotalChartLoading"
+            ></app-charts-template>
     
             <!-- COMENTARIOS POR PUBLICACIÓN -->
-            <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios por Publicación</h2>
-                <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
-                    <canvas id="commentsPerPostChart" class="w-full max-w-full h-full"></canvas>
-                </div>
-            </div>
+            <app-charts-template
+            titleChart="Comentarios por Publicación"
+            canvasIdChart="commentsPerPostChart"
+            [signalDisableOrEnable]="this.commentsPerPostChartLoading"
+            ></app-charts-template>
     
             <!-- PUBLICACIONES EN EL TIEMPO -->
-            <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Publicaciones realizados en el Tiempo</h2>
-                <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
-                    <canvas id="postsTimelineChart" class="w-full max-w-full h-full"></canvas>
-                </div>
-            </div>
+            <app-charts-template
+            titleChart="Publicaciones realizados en el Tiempo"
+            canvasIdChart="postsTimelineChart"
+            [signalDisableOrEnable]="this.postsTimelineChartLoading"
+            ></app-charts-template>
     
             <!-- COMENTARIOS EN EL TIEMPO -->
-            <div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
-                <h2 class="text-white text-xs sm:text-sm mb-2">Comentarios realizados en el Tiempo</h2>
-                <div class="flex-1 flex items-center justify-center min-h-[180px] sm:min-h-[200px] lg:min-h-[224px]">
-                    <canvas id="commentsTimelineChart" class="w-full max-w-full h-full"></canvas>
-                </div>
-            </div>
+            <app-charts-template
+            titleChart="Comentarios realizados en el Tiempo"
+            canvasIdChart="commentsTimelineChart"
+            [signalDisableOrEnable]="this.commentsTimelineChartLoading"
+            ></app-charts-template>
         </div>
     </div>
 </section>
