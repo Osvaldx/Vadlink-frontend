@@ -6,10 +6,11 @@ import { NgIcon } from '@ng-icons/core';
 import { Observable } from 'rxjs';
 import { DatePostsPipe } from '../../pipes/date-posts-pipe';
 import { TagRolPipe } from '../../pipes/tag-rol-pipe';
+import { HoverAnimation } from "../../directives/hover-animation";
 
 @Component({
   selector: 'app-users-table',
-  imports: [AsyncPipe, NgClass, DatePostsPipe, TagRolPipe, NgIcon],
+  imports: [AsyncPipe, NgClass, DatePostsPipe, TagRolPipe, NgIcon, HoverAnimation],
   templateUrl: './users-table.html',
   styleUrl: './users-table.css',
 })

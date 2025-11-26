@@ -14,7 +14,7 @@
         <tbody class="divide-y divide-neutral-700">
             @for (user of users | async; track $index) {
                 @let rolTag = user.rol | tagRol;
-                <tr class="hover:bg-neutral-700 transition-colors">
+                <tr class="transition-colors" appHoverAnimation="bg-neutral-700">
                     <td class="px-4 py-3 max-sm:hidden">
                         <div class="flex items-center gap-3">
                             <img
