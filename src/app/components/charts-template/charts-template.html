@@ -1,0 +1,10 @@
+<div class="bg-neutral-900 p-3 sm:p-4 rounded-lg shadow flex flex-col">
+    <h2 class="text-white text-xs sm:text-sm mb-2">{{titleChart}}</h2>
+    <div class="flex-1 flex items-center justify-center min-h-[200px] sm:min-h-[224px]">
+        <div class="flex flex-col gap-2 justify-center items-center" [hidden]="!this.signalDisableOrEnable()">
+            <div class="w-25 h-25 text-white border-5 rounded-full border-r-transparent animate-spin-clockwise animate-iteration-count-infinite"></div>
+            <p class="text-white font-bold text-center">Cargando...</p>
+        </div>
+        <canvas [id]="canvasIdChart" class="w-full max-w-full h-full" [hidden]="this.signalDisableOrEnable()"></canvas>
+    </div>
+</div>
