@@ -7,16 +7,31 @@
             </div>
             <div class="pt-16 sm:pt-20 px-6 sm:px-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div class="text-center sm:text-left">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                    <p class="text-neutral-100 text-2xl sm:text-3xl font-semibold">{{ data?.firstName }}</p>
-                    <p class="text-neutral-100 text-2xl sm:text-3xl font-semibold">{{ data?.lastName }}</p>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 items-center mt-2">
+                        @if (!editMode()) {
+                            <p class="text-neutral-100 text-2xl sm:text-3xl font-semibold">{{ data?.firstName }}</p>
+                            <p class="text-neutral-100 text-2xl sm:text-3xl font-semibold">{{ data?.lastName }}</p>
+                        } @else {
+                            <input class="px-2 w-50 text-neutral-100 text-2xl sm:text-3xl font-semibold border border-neutral-100" type="text" [value]="data?.firstName">
+                            <input class="px-2 w-50 text-neutral-100 text-2xl sm:text-3xl font-semibold border border-neutral-100" type="text" [value]="data?.lastName">
+                        }
                     </div>
                     <p class="text-neutral-400 text-base sm:text-lg mt-1">@{{ data?.username }}</p>
                 </div>
-                <button class="flex justify-center items-center gap-2 bg-red-200 cursor-pointer text-red-500 font-semibold rounded-2xl px-4 py-2 transition-all duration-300 hover:bg-red-500 hover:text-red-100 hover:scale-105 active:scale-95">
-                    <ng-icon name="faSolidPencil"></ng-icon>
-                    <span>Editar Perfil</span>
-                </button>
+                @if (!editMode()) {
+                    <button (click)="editProfile()" class="flex justify-center items-center gap-2 bg-red-200 cursor-pointer text-red-500 font-semibold rounded-2xl px-4 py-2 transition-all duration-300 hover:bg-red-500 hover:text-red-100 hover:scale-105 active:scale-95">
+                        <ng-icon name="faSolidPencil"></ng-icon>
+                        <span>Editar Perfil</span>
+                    </button>
+                } @else {
+                    <div class="flex justify-center">
+                        <button (click)="editProfile()" class="hover:bg-blue-800 px-2 py-1 rounded-2xl bg-blue-500 text-neutral-200 font-semibold cursor-pointer" appButtonClickAnimation>Cambiar foto perfil</button>
+                    </div>
+                    <div class="flex gap-2 justify-center">
+                        <button (click)="editProfile()" class="hover:bg-red-500 px-2 py-1 rounded-2xl bg-neutral-800 text-neutral-200 font-semibold cursor-pointer" appButtonClickAnimation>Cancelar</button>
+                        <button (click)="editProfile()" class="hover:bg-green-500 px-2 py-1 rounded-2xl bg-green-600 text-neutral-200 font-semibold cursor-pointer" appButtonClickAnimation>Guardar</button>
+                    </div>
+                }
             </div>
             <div class="w-full h-0.5 bg-neutral-800 mt-4 mb-4"></div>
             <div class="flex justify-evenly max-sm:flex-col max-sm:gap-3">

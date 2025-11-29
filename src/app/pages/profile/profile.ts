@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Auth } from '../../services/auth';
 import { UserData } from '../../interfaces/user-data';
 import { NgIcon } from '@ng-icons/core';
@@ -8,10 +8,11 @@ import { PostsService } from '../../services/posts-service';
 import { PostFormat } from '../../interfaces/post-format';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { ButtonClickAnimation } from "../../directives/button-click-animation";
 
 @Component({
   selector: 'app-profile',
-  imports: [NgIcon, CustomPost, InfoProfile, AsyncPipe],
+  imports: [NgIcon, CustomPost, InfoProfile, AsyncPipe, ButtonClickAnimation],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -20,8 +21,8 @@ export class Profile implements OnInit{
   public data!: UserData | null;
   public create_at!: Date;
   public dateofbirth!: Date;
-
   public posts$!: Observable<PostFormat[]>
+  public editMode = signal<boolean>(false);
 
   constructor(private readonly authService: Auth, private readonly postsService: PostsService) { }
 
@@ -42,6 +43,10 @@ export class Profile implements OnInit{
 
   public postDeleted(id: string) {
     this.postsService.postDeletedLocal(id);
+  }
+
+  public editProfile() {
+    this.editMode.update(e => !e);
   }
 
 }
