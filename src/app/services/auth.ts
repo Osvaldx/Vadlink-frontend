@@ -42,7 +42,7 @@ export class Auth {
         this.currentUser.set(user as UserData);
         console.log(this.currentUser());
         this.startTokenTimer(user.exp);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/posts');
         this.loadingSubject.next(false);
       },
       error: (err: HttpErrorResponse) => {
