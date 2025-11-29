@@ -42,8 +42,10 @@ export class Login implements OnInit{
   }
 
   public sendCredentials(): void {
+    console.log("prueba de que anda el bootn xd");
     const form = this.loginForm.controls;
-    const emailOrUsername = ((form.email.value != '') ? form.email.value : form.username.value);
+    const modeIsUsername = this.loginWithUsername();
+    const emailOrUsername = ((modeIsUsername) ? form.username.value : form.email.value);
     const password = form.password.value;
 
     if(!emailOrUsername || !password) return;
